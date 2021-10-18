@@ -1,0 +1,52 @@
+---
+title: "mmwr-analysis"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{mmwr-analysis}
+  %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(vax.eff)
+library(lubridate)
+```
+
+```{r}
+# check the table margins from the paper:
+mmwr %>% group_by(vax.status) %>% summarize(across(c(cases, hospitalizations, deaths), sum))
+
+```
+
+```{r}
+
+glm1 = glm(cases ~ time.period * vax.status- 1, data = mmwr, family = poisson)
+summary(glm1)
+
+`P(V=1|T=0)` = .37
+`P(V=1|T=1)` = .53
+
+## irr for 18-49 in April - June
+122.4/10.9
+
+nweeks1 = (as.Date("2021-06-19") - as.Date("2021-04-04")) / dweeks(1)
+
+331151/nweeks1/10^5
+
+(331151/.63)/(10346/.37)
+
+
+
+
+```
+
+
