@@ -1,20 +1,19 @@
-#
-# This is the server logic of a Shiny web application. You can run the
-# application by clicking 'Run App' above.
-#
-# Find out more about building applications with Shiny here:
-#
-#    http://shiny.rstudio.com/
-#
 
-library(shiny)
-library(plotly)
-library(vax.eff)
-
+#' server
+#'
+#' @param input
+#' @param output
+#' @param session
+#'
+#' @return
+#' @export
+#'
+#' @importFrom plotly plot_ly layout renderPlotly
+#' @importFrom shiny reactive
 server = function(input, output, session)
 {
 
-  results = reactive(
+  results = shiny::reactive(
     {
       sim_data_binom(
         N = as.integer(input$N),
@@ -29,7 +28,7 @@ server = function(input, output, session)
     }
   )
 
-  output$distPlot <- renderPlotly({
+  output$distPlot <- plotly::renderPlotly({
 
 
     plotly::plot_ly(
