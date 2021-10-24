@@ -12,7 +12,7 @@ library(plotly)
 library(vax.eff)
 
 # Define UI for application that draws a histogram
-shinyUI(fluidPage(
+ui = shinyUI(fluidPage(
   withMathJax(),
 
   # Application title

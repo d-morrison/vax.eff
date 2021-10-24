@@ -11,15 +11,8 @@ library(shiny)
 library(plotly)
 library(vax.eff)
 
-#' Define server logic required to draw a histogram
-#'
-#' @param input
-#' @param output
-#'
-#' @return
-#' @export
-#'
-shinyServer(function(input, output) {
+server = function(input, output, session)
+{
 
   results = reactive(
     {
@@ -61,4 +54,4 @@ shinyServer(function(input, output) {
 
   })
 
-})
+}
