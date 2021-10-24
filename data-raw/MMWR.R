@@ -3,7 +3,7 @@ library(tidyverse)
 age_groups = c("18-49", "50-64", "65+")
 
 mmwr = data.frame(
-  P = rep(c("4/4-6/19", "6/20-7/17"), each = 6),
+  T = rep(c("4/4-6/19", "6/20-7/17"), each = 6),
   V = rep(c("not full", "full"), each =  3),
   A = age_groups,
   C = c(

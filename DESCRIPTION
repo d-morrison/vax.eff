@@ -18,3 +18,11 @@ Suggests:
     knitr
 VignetteBuilder: knitr
 RoxygenNote: 7.1.2
+Imports: 
+    magrittr,
+    dplyr,
+    shiny,
+    plotly,
+    vax.eff
+Remotes:
+  d-morrison/vax.eff

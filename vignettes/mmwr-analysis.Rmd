@@ -23,7 +23,7 @@ library(lubridate)
 
 ```{r}
 # check the table margins from the paper:
-mmwr %>% group_by(vax.status) %>% summarize(across(c(cases, hospitalizations, deaths), sum))
+mmwr %>% group_by(V) %>% summarize(across(c(C, H, D), sum))
 
 ```
 
@@ -45,6 +45,15 @@ nweeks1 = (as.Date("2021-06-19") - as.Date("2021-04-04")) / dweeks(1)
 (331151/.63)/(10346/.37)
 
 
+
+
+```
+
+
+```{r}
+
+library(tidycensus)
+age10 = get_decennial(geography = "state", variables = "P013001")
 
 
 ```
