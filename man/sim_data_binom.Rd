@@ -6,6 +6,9 @@
 \usage{
 sim_data_binom(
   N = 11 * 10^6,
+  `bias(N*)` = 0,
+  `sd(N*)` = 0,
+  `mu(N*)` = N + `bias(N*)`,
   `p(V)` = 0.4,
   `p(E|!V)` = 0.0014,
   RR = 0.25,

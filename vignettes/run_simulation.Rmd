@@ -43,12 +43,12 @@ tab1  = expand_grid(
 
 tab1 %<>%
   bind_cols(
-    tab1 %$% reporting_multiplier(`p(V*)` = `p(V*)`, R = RR, `p(V*|V)` = r_V, `p(L|V*E*)` = P_L)) %>%
-  select(-(1:2))
+    tab1 %$% reporting_multiplier(`p(V*)` = `p(V*)`, R = RR, `p(V*|V)` = r_V, `p(L|V*E*)` = P_L))
 
 pander(tab1)
 
-
+library(readr)
+write_csv(tab1, "inst/extdata/table1.csv")
 
 ```
 

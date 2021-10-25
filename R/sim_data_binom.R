@@ -18,6 +18,9 @@
 
 sim_data_binom = function(
   N = 11 * 10^6,
+  `bias(N*)` = 0,
+  `sd(N*)` = 0,
+  `mu(N*)` = N + `bias(N*)`,
   `p(V)` = .4,
   `p(E|!V)` = .0014,
   RR = .25,
@@ -31,17 +34,30 @@ sim_data_binom = function(
 {
 
   d1 = dplyr::tibble(
+
     `V`     = rbinom(n = n_sims, size = N,        p = `p(V)`),
     `V*`    = rbinom(n = n_sims, size = V,        p = `p(V*|V)`),
-    `V*E*`  = rbinom(n = n_sims, size = `V*`,     p = `p(E|V)`  * `p(E*|E)`),
+    `V*E`   = rbinom(n = n_sims, size = `V*`,     p = `p(E|V)`),
+    `V*E*`  = rbinom(n = n_sims, size = `V*E`,    p = `p(E*|E)`),
     `L`     = rbinom(n = n_sims, size = `V*E*`,   p = `p(L|V*E*)`),
-    `!V*E*` = rbinom(n = n_sims, size = V - `V*`, p = `p(E|V)`  * `p(E*|E)`),
-    `!VE*`  = rbinom(n = n_sims, size = N - V,    p = `p(E|!V)` * `p(E*|E)`),
 
+    `!V*E`  = rbinom(n = n_sims, size = V - `V*`, p = `p(E|V)`),
+    `!V*E*` = rbinom(n = n_sims, size = `!V*E`,   p = `p(E*|E)`),
+
+    `!VE`   = rbinom(n = n_sims, size = N - V,    p = `p(E|!V)`),
+    `!VE*`  = rbinom(n = n_sims, size = `!VE`,    p = `p(E*|E)`),
+
+    `VE` = `V*E` + `!V*E`,
     `E*` = `V*E*` + `!V*E*` + `!VE*`,
+
+    `N*` = rnorm(n = n_sims, mean = `mu(N*)`, sd = `sd(N*)`),
+
     `p(E*|V*)` = L/`V*`,
-    `p(E*|!V*)` = (`E*` - L) / (N - `V*`),
-    `RR*` = `p(E*|V*)` / `p(E*|!V*)`
+    `p(E*|!V*)` = (`E*` - L) / (`N*` - `V*`),
+    `RR*` = `p(E*|V*)` / `p(E*|!V*)`,
+    `!V` = N - V,
+    RRhat = (`VE`/`V`) / (`!VE` / `!V`),
+    K = `RR*`/RR
   )
 
   return(d1)

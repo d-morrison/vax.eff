@@ -46,7 +46,8 @@ sim_data = function(
     dplyr::mutate(
       `p(E*|V*)` = L/`V*`,
       `p(E*|!V*)` = (`E*` - L) / (N - `V*`),
-      `RR*` = `p(E*|V*)` / `p(E*|!V*)`
+      `RR*` = `p(E*|V*)` / `p(E*|!V*)`,
+
     )
 
   return(d2)

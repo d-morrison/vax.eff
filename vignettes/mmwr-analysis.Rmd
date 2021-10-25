@@ -19,6 +19,8 @@ knitr::opts_chunk$set(
 ```{r setup}
 library(vax.eff)
 library(lubridate)
+library(tidyverse)
+library(magrittr)
 ```
 
 ```{r}

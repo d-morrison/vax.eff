@@ -1,0 +1,36 @@
+---
+title: "plotly"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{plotly}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(vax.eff)
+```
+
+```{r}
+
+library(ggplot2)
+library(plotly)
+
+base <-
+  ggplot() +
+  xlim(-5, 5)
+
+base2 = base + geom_function(fun = dnorm)
+
+ggplotly(base2)
+
+```
+
+

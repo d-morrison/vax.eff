@@ -23,4 +23,7 @@ Imports:
     dplyr,
     shiny,
     plotly,
-    pkgload
+    pkgload,
+    DT,
+    shinyWidgets,
+    xtable
