@@ -14,6 +14,7 @@ sim_results_table = function(results, theoretical_results)
   tab1 = results %>%
     dplyr::summarize(
       K = theoretical_results %>% dplyr::pull(`R*/R`),
+      `R^*` = theoretical_results %>% dplyr::pull(`R*`),
       `\\bar{\\hat{K}}` = mean(`RR*`/true_RR),
       `SD(\\hat{K})` = sd(`RR*`/true_RR),
       `\\bar{\\hat{R^*}}` = mean(`RR*`),
