@@ -8,7 +8,7 @@
 #' @return
 #' @export
 #'
-#' @importFrom plotly plot_ly layout renderPlotly
+#' @importFrom plotly plot_ly layout renderPlotly TeX config add_histogram
 #' @importFrom shiny reactive withMathJax
 #' @importFrom DT datatable renderDataTable formatRound
 #' @importFrom dplyr summarize
@@ -34,67 +34,31 @@ server = function(input, output, session)
     }
   )
 
+  theoretical_results =
+    shiny::reactive(
+      {
+        reporting_multiplier(
+          `p(V)` = input$pV,
+          `p(V*|V)` = input$rV,
+          `p(E*|E)` = input$rE,
+          `p(L|V*E*)` = input$pL,
+          `p(E|!V)` = input$pE,
+          R = input$RR
+        )
+      }
+    )
+
   output$summary_stats = shiny::renderUI(
-    {
-      tab1 = results() %>%
-        dplyr::summarize(
-          `\\bar{\\hat{K}}` = mean(`RR*`/input$RR),
-          `SD(\\hat{K})` = sd(`RR*`/input$RR),
-          `\\bar{\\hat{R^*}}` = mean(`RR*`),
-          `SD(\\hat{R^*})` = sd(`RR*`),
-          `\\% \\{\\hat{R^*} < R\\}` = mean(`RR*` < input$RR) * 100,
-          `\\% \\{\\hat{R^*} < \\hat{R}\\}` = mean(`RR*` < `RRhat`) * 100
-        )
+    sim_results_table(
+      results = results(),
+      theoretical_results = theoretical_results()
+    ))
 
-      # https://coderedirect.com/questions/386355/math-mode-in-shiny-table:
+  output$distPlot <- plotly::renderPlotly(
+    plot_RR_histograms(data = results()))
 
-      tab2 = xtable::xtable(tab1,
-          align = rep("c", ncol(tab1)+1)) %>%
-        print(
-          include.rownames=FALSE,
-          floating=FALSE, tabular.environment="array", comment=FALSE,
-          print.results=FALSE,
-          sanitize.colnames.function = function(x) x,
-          sanitize.rownames.function = function(x) x
-
-        )
-
-
-
-      tagList(
-        shiny::withMathJax(),
-        HTML(paste0("$$", tab2, "$$"))
-      )
-
-    }
+  output$scatter = plotly::renderPlotly(
+    RR_scatterplots(data = results())
   )
-
-  output$distPlot <- plotly::renderPlotly({
-
-
-    plotly::plot_ly(
-      data = results(),
-      alpha = 0.6,
-      type = 'histogram',
-      histnorm = "probability",
-      x = ~`RR*`
-    ) %>%
-      plotly::layout(
-        title = "Histogram of Estimated Relative Risks",
-        xaxis = list(
-          title = "R* (Estimated Relative Risk, Vaccinated vs. Not)",
-          range = c(0, max(1, max(results()[["RR*"]]) * 1.1))
-        ),
-        yaxis = list(
-          title = "Pr(RR in binned range)"
-        )
-      )
-
-    # breaks = 100,
-    # col = 'darkgray',
-    # border = 'white',
-
-
-  })
 
 }

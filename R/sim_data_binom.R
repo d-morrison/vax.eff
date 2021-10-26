@@ -49,13 +49,14 @@ sim_data_binom = function(
 
     `VE` = `V*E` + `!V*E`,
     `E*` = `V*E*` + `!V*E*` + `!VE*`,
+    `!V` = N - V,
 
     `N*` = rnorm(n = n_sims, mean = `mu(N*)`, sd = `sd(N*)`),
 
     `p(E*|V*)` = L/`V*`,
     `p(E*|!V*)` = (`E*` - L) / (`N*` - `V*`),
     `RR*` = `p(E*|V*)` / `p(E*|!V*)`,
-    `!V` = N - V,
+
     RRhat = (`VE`/`V`) / (`!VE` / `!V`),
     K = `RR*`/RR
   )
