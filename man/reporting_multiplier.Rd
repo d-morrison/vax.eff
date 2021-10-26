@@ -5,10 +5,12 @@
 \title{Title}
 \usage{
 reporting_multiplier(
+  data = tibble(`p(V)`, `p(E|!V)`, `p(E|V)`, `p(V*|V)`, `p(V*)`, `p(E*|E)`,
+    `p(L|V*E*)`, R),
   `p(V)` = 0.4,
   `p(E|!V)` = 0.0014,
   R = 0.25,
-  `p(E|V)` = `p(E|!V)` * RR,
+  `p(E|V)` = `p(E|!V)` * R,
   `p(V*|V)` = 0.75,
   `p(V*)` = `p(V*|V)` * `p(V)`,
   `p(E*|E)` = 0.75,
@@ -16,7 +18,7 @@ reporting_multiplier(
 )
 }
 \arguments{
-\item{`p(L|V*E*)`}{}
+\item{data}{}
 }
 \value{
 

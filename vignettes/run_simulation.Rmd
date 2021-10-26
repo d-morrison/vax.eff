@@ -10,11 +10,12 @@ vignette: >
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
+  echo = FALSE,
   comment = "#>"
 )
 ```
 
-```{r setup}
+```{r setup, include = FALSE}
 library(vax.eff)
 library(tidyverse)
 
@@ -41,9 +42,9 @@ tab1  = expand_grid(
   r_V = c(.5, .75, .9, 1),
   P_L = `p(V*|V)`)
 
-tab1 %<>%
-  bind_cols(
-    tab1 %$% reporting_multiplier(`p(V*)` = `p(V*)`, R = RR, `p(V*|V)` = r_V, `p(L|V*E*)` = P_L))
+tab1 = 
+  tab1 %$% reporting_multiplier(`p(V*)` = `p(V*)`, R = RR, `p(V*|V)` = r_V, `p(L|V*E*)` = P_L)
+
 
 pander(tab1)
 
@@ -52,5 +53,111 @@ write_csv(tab1, "inst/extdata/table1.csv")
 
 ```
 
+## Figure: Relationship of bias factor $K = R^*/R$, linkage probability $P_L$, and vaccination reporting probability,
+given $P(V^*) = 0.5$ and $R = 0.25$.
 
+```{r}
+
+library(purrr)
+library(ggplot2)
+library(tibble)
+library(latex2exp)
+
+`pV*` = 0.5
+R = 0.25
+
+f1 = function(pL, rV) 
+{
+  reporting_multiplier(
+    `p(V)` = `pV*`/ rV,
+    `p(E|!V)` = NA,
+    R = R,
+    `p(V*|V)` = rV,
+    `p(E*|E)` = NA,
+    `p(L|V*E*)` = pL) %>% pull(`R*/R`)
+  
+}
+
+plot1 = ggplot() +
+  xlim(0.5,1) +
+  expand_limits(y = 0) +
+  geom_function(aes(col = "0.6"), fun = function(x) f1(x, rV = 0.6)) +
+  geom_function(aes(col = "0.7"), fun = function(x) f1(x, rV = 0.7)) +
+  geom_function(aes(col = "0.8"), fun = function(x) f1(x, rV = 0.8)) +
+  geom_function(aes(col = "0.9"), fun = function(x) f1(x, rV = 0.9)) +
+  geom_function(aes(col = "1.0"), fun = function(x) f1(x, rV = 1.0)) +
+  theme_bw() +
+  xlab(latex2exp::TeX("p_L = Pr(Records Linked | Event and Vaccine Recorded)")) +
+  ylab(latex2exp::TeX("K = R^*/R")) +
+  # abline(h = 0, col = "black") +
+  labs(color = latex2exp::TeX("r_V"))
+
+
+print(plot1)
+
+
+```
+
+## Table 1
+
+```{r, include = FALSE}
+
+pV = .75
+rD = .9
+rV = .9
+
+library(magrittr)
+library(pander)
+
+set.seed(1)
+
+tab1 = 
+  expand_grid(
+    N = 11 * 10^6,
+    `bias(N*)` = 0,
+    `sd(N*)` = 0,
+    `p(V)` = pV,
+    `p(V*|V)` = rV,
+    `p(E*|E)` = rD,
+    `p(L|V*E*)` = c(.95, .9, .7),
+    `p(E|!V)` = 0.0014,
+    RR = c(1, .25)) %>% 
+  reporting_multiplier()
+
+#TODO: decomp into `run_sims_and_summarize()`
+for (cur in 1:nrow(tab1))
+{
+  
+  sim_data_binom(
+  N = 11 * 10^6,
+  `bias(N*)` = 0,
+  `sd(N*)` = 0,
+  `mu(N*)` = N + `bias(N*)`,
+  `p(V)` = .4,
+  `p(E|!V)` = .0014,
+  RR = .25,
+  `p(E|V)` = `p(E|!V)` * RR,
+  `p(V*|V)` = 0.75,
+  `p(E*|E)` = 0.75,
+  `p(L|V*E*)` = 0.75,
+  n_sims = 1000
+
+)
+  
+}
+
+
+pander(tab1)
+
+library(readr)
+write_csv(tab1, "inst/extdata/table1.csv")
+
+```
+
+Simulation results with $P(V) = `r pV`$, $r_D = `r rD`$, and $r_V = `r rV`$:
+
+```{r}
+
+
+```
 

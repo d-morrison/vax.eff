@@ -8,11 +8,13 @@
 #' @param `p(V*)`
 #' @param `p(E*|E)`
 #' @param `p(L|V*E*)`
+#' @param data
 #'
 #' @return
 #' @export
 #'
 reporting_multiplier = function(
+  data = tibble(`p(V)`,`p(E|!V)`,`p(E|V)`,`p(V*|V)`,`p(V*)`,`p(E*|E)`,`p(L|V*E*)`, R),
   `p(V)` = .4,
   `p(E|!V)` = .0014,
   R = .25,
@@ -23,12 +25,14 @@ reporting_multiplier = function(
   `p(L|V*E*)` = 0.75
 )
 {
-  temp = tibble(
-    `p(V)`,`p(E|!V)`,`p(E|V)`,`p(V*|V)`,`p(V*)`,`p(E*|E)`,`p(L|V*E*)`, R,
-    num = `p(L|V*E*)` * (1 - `p(V*)`),
-    denom =  1 - (`p(V*)`/ `p(V*|V)`) * (1 - R * (1 - `p(V*|V)` * `p(L|V*E*)`)),
-    `R*/R` = num/denom,
-    `R*` = R * `R*/R`) %>% select(-c(num, denom))
+  temp =
+    data %>%
+    mutate(
+      num = `p(L|V*E*)` * (1 - `p(V*)`),
+      denom =  1 - (`p(V*)`/ `p(V*|V)`) * (1 - R * (1 - `p(V*|V)` * `p(L|V*E*)`)),
+      `R*/R` = num/denom,
+      `R*` = R * `R*/R`) %>%
+    select(-c(num, denom))
 
   return(temp)
 }

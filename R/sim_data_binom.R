@@ -17,6 +17,7 @@
 #' @importFrom magrittr "%>%" "%<>%"
 
 sim_data_binom = function(
+  # data = tibble(`p(V)`,`p(E|!V)`,`p(E|V)`,`p(V*|V)`,`p(V*)`,`p(E*|E)`,`p(L|V*E*)`, R),
   N = 11 * 10^6,
   `bias(N*)` = 0,
   `sd(N*)` = 0,
