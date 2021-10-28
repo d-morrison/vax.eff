@@ -3,7 +3,7 @@
 #' @param N
 #' @param `p(V)`
 #' @param `p(E|!V)`
-#' @param RR
+#' @param R
 #' @param `p(E|V)`
 #' @param `p(V*|V)`
 #' @param `p(V*|!V)`
@@ -19,8 +19,8 @@ sim_data = function(
   N = 11 * 10^6,
   `p(V)` = .4,
   `p(E|!V)` = .0014,
-  RR = .25,
-  `p(E|V)` = `p(E|!V)` * RR,
+  R = .25,
+  `p(E|V)` = `p(E|!V)` * R,
   `p(V*|V)` = 0.75,
   `p(V*|!V)` = 0,
   `p(E*|E)` = 0.75,
@@ -46,7 +46,7 @@ sim_data = function(
     dplyr::mutate(
       `p(E*|V*)` = L/`V*`,
       `p(E*|!V*)` = (`E*` - L) / (N - `V*`),
-      `RR*` = `p(E*|V*)` / `p(E*|!V*)`,
+      `R*hat` = `p(E*|V*)` / `p(E*|!V*)`,
 
     )
 

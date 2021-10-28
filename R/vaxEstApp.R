@@ -39,18 +39,14 @@ vaxEstApp = function(...)
 
                                          value = 11000000),
 
-          shinyWidgets::autonumericInput("bias(N*)",
+          shinyWidgets::autonumericInput("N*",
                                          step = 1,
+                                         min = 1,
                                          decimalPlaces = 0,
-                                         "Bias of est. pop. size \\((E[N^*]-N)\\)",
+                                         "Pop. size used in analysis \\((N^*)\\)",
                                          digitGroupSeparator = ",",
 
-                                         value = 0),
-
-          shinyWidgets::autonumericInput("sd(N*)",
-                                         "Std. dev. of est. pop. size \\((SD(N^*))\\)",
-                                         value = 0),
-
+                                         value = 11000000),
 
           shinyWidgets::autonumericInput("pV",
                                          step = .01,

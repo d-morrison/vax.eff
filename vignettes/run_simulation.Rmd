@@ -1,5 +1,5 @@
 ---
-title: "run_simulation"
+title: "Results"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{run_simulation}
@@ -13,55 +13,26 @@ knitr::opts_chunk$set(
   echo = FALSE,
   comment = "#>"
 )
-```
-
-```{r setup, include = FALSE}
 library(vax.eff)
 library(tidyverse)
-
-```
-
-```{r}
-
-b = sim_data_binom()
-hist(b$`RR*`, breaks = 100,xlim = c(0,1))
-
-```
-
-## Table: Bias in Relative Risk with $P_V^*$ = 0.50$ and true $RR = 0.25$:
-```{r}
-
 library(magrittr)
 library(pander)
-
-`p(L|V*E*)` = `p(V*|V)` = c(.5, .75, .9, 1)
-
-tab1  = expand_grid(
-  `p(V*)` = 0.5,
-  RR = 0.25,
-  r_V = c(.5, .75, .9, 1),
-  P_L = `p(V*|V)`)
-
-tab1 = 
-  tab1 %$% reporting_multiplier(`p(V*)` = `p(V*)`, R = RR, `p(V*|V)` = r_V, `p(L|V*E*)` = P_L)
-
-
-pander(tab1)
-
-library(readr)
-write_csv(tab1, "inst/extdata/table1.csv")
-
-```
-
-## Figure: Relationship of bias factor $K = R^*/R$, linkage probability $P_L$, and vaccination reporting probability,
-given $P(V^*) = 0.5$ and $R = 0.25$.
-
-```{r}
-
+library(xtable)
 library(purrr)
 library(ggplot2)
 library(tibble)
 library(latex2exp)
+library(janitor)
+library(scales)
+
+```
+
+## Figure 1
+
+Relationship of bias factor $K = R^*/R$, linkage probability $P_L$, and vaccination reporting probability,
+given $P(V^*) = 0.5$ and $R = 0.25$.
+
+```{r, width = 6}
 
 `pV*` = 0.5
 R = 0.25
@@ -105,59 +76,82 @@ print(plot1)
 pV = .75
 rD = .9
 rV = .9
+`N*` = 11 * 10^6
 
-library(magrittr)
-library(pander)
+all_results = gen_tab1(pV = pV, rD = rD, rV = rV, `mu(N*)` = `N*`,
+                       `R` = c(1, .25),
+                       `p(L|V*E*)` = c(.95, .9, .7)) %>%
+  rename(`$P_L$` = `$p(L|V*E*)$`)
 
-set.seed(1)
+```
 
-tab1 = 
-  expand_grid(
-    N = 11 * 10^6,
-    `bias(N*)` = 0,
-    `sd(N*)` = 0,
-    `p(V)` = pV,
-    `p(V*|V)` = rV,
-    `p(E*|E)` = rD,
-    `p(L|V*E*)` = c(.95, .9, .7),
-    `p(E|!V)` = 0.0014,
-    RR = c(1, .25)) %>% 
-  reporting_multiplier()
+Simulation results with $P(V) = `r pV`$, $r_D = `r rD`$, $r_V = `r rV`$, and $N^* = N = 11 * 10^6$:
 
-#TODO: decomp into `run_sims_and_summarize()`
-for (cur in 1:nrow(tab1))
-{
-  
-  sim_data_binom(
-  N = 11 * 10^6,
-  `bias(N*)` = 0,
-  `sd(N*)` = 0,
-  `mu(N*)` = N + `bias(N*)`,
-  `p(V)` = .4,
-  `p(E|!V)` = .0014,
-  RR = .25,
-  `p(E|V)` = `p(E|!V)` * RR,
-  `p(V*|V)` = 0.75,
-  `p(E*|E)` = 0.75,
-  `p(L|V*E*)` = 0.75,
-  n_sims = 1000
+```{r, results = 'asis'}
+print(xtable(all_results), 
+      type ="latex", 
+      sanitize.text.function=function(x){x},
+      include.rownames=FALSE)
+```
 
+
+## Table 2
+
+```{r, include = FALSE}
+
+pV = .75
+rD = .7
+rV = .9
+`N*` = 11 * 10^6
+
+all_results = gen_tab1(pV = pV, rD = rD, rV = rV, `mu(N*)` = `N*`,
+                       `R` = c(1, .25),
+                       `p(L|V*E*)` = c(.95, .9, .7)) %>%
+  rename(`$P_L$` = `$p(L|V*E*)$`)
+```
+
+Simulation results with $P(V) = `r pV`$, $r_D = `r rD`$, $r_V = `r rV`$, and $N^* = N = 11 * 10^6$:
+
+```{r, results = 'asis'}
+print(xtable(all_results), 
+      type ="latex", 
+      sanitize.text.function=function(x){x},
+      include.rownames=FALSE)
+```
+
+
+## Table 3
+
+```{r, include = FALSE}
+
+pV = .75
+rD = .9
+rV = .9
+R = .25
+pL = .9
+multiplier = c(1.2, 1.1, 1.05, 1, .95, .9, .8)
+`N*` = 11 * 10^6 * multiplier
+
+all_results = gen_tab1(pV = pV, rD = rD, rV = rV, `mu(N*)` = `N*`,
+                       `R` = R,
+                       `p(L|V*E*)` = pL) %>%
+  rename(`$N^*$` = `$mu(N*)$`) %>%
+  mutate(`$N^*$` = scales::number(`$N^*$`, big.mark = ","))
+
+all_results = bind_cols(
+  "$N^*/N$" = multiplier,
+  all_results
 )
-  
-}
-
-
-pander(tab1)
-
-library(readr)
-write_csv(tab1, "inst/extdata/table1.csv")
 
 ```
 
-Simulation results with $P(V) = `r pV`$, $r_D = `r rD`$, and $r_V = `r rV`$:
+Simulation results with $N^*$ varying ($P(V) = `r pV`$, $r_D = `r rD`$, $r_V = `r rV`$, $P_L = `r pL`$, $R = `r R`$):
 
-```{r}
+Note: we haven't worked out yet how $N^* \ne N$ affects $K$.
 
-
+```{r, results = 'asis'}
+print(xtable(all_results), 
+      type ="latex", 
+      sanitize.text.function=function(x){x},
+      include.rownames=FALSE)
 ```
-

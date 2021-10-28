@@ -21,14 +21,14 @@ server = function(input, output, session)
     {
       sim_data_binom(
         N = as.integer(input$N),
-        `bias(N*)` = input$`bias(N*)`,
-        `sd(N*)` = input$`sd(N*)`,
+        `bias(N*)` = input$`N*` - input$N,
+        `sd(N*)` = 0,
         `p(V)` = input$pV,
         `p(V*|V)` = input$rV,
         `p(E*|E)` = input$rE,
         `p(L|V*E*)` = input$pL,
         `p(E|!V)` = input$pE,
-        RR = input$RR,
+        R = input$RR,
         n_sims = input$nsims)
 
     }
@@ -49,10 +49,19 @@ server = function(input, output, session)
     )
 
   output$summary_stats = shiny::renderUI(
-    sim_results_table(
-      results = results(),
-      theoretical_results = theoretical_results()
-    ))
+    {
+      tab1 = sim_results_table(
+        results = results(),
+        theoretical_results = theoretical_results()
+      ) %>% format_sim_results_table()
+
+      tagList(
+        shiny::withMathJax(),
+        shiny::HTML(paste0("$$", tab1, "$$"))
+      )
+
+
+    })
 
   output$distPlot <- plotly::renderPlotly(
     plot_RR_histograms(data = results()))

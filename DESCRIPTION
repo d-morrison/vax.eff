@@ -26,4 +26,5 @@ Imports:
     pkgload,
     DT,
     shinyWidgets,
-    xtable
+    xtable,
+    janitor

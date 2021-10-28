@@ -11,19 +11,19 @@
 plot_RR_histograms = function(data)
 {
 
-  # range1 = range(data %>% dplyr::select(`RRhat`, `RR*`)) * c(.9, 1.1)
+  # range1 = range(data %>% dplyr::select(`Rhat`, `R*hat`)) * c(.9, 1.1)
   data %>%
   plotly::plot_ly(
     alpha = 0.6,
     type = 'histogram',
     histnorm = "probability",
     name = plotly::TeX("\\hat{R^*}"),
-    x = ~`RR*`,
+    x = ~`R*hat`,
     hoverinfo = 'x+y',
     nbinsx = 100
   ) %>%
     plotly::add_histogram(
-      x = ~`RRhat`,
+      x = ~`Rhat`,
       alpha = 0.6,
       type = 'histogram',
       histnorm = "probability",

@@ -10,16 +10,16 @@
 RR_scatterplots = function(data)
 {
 
-  # range1 = c(0,max(data %>% dplyr::select(`RRhat`, `RR*`)) * 1.1)
-  range1 = range(data %>% dplyr::select(`RRhat`, `RR*`)) * c(.9, 1.1)
+  # range1 = c(0,max(data %>% dplyr::select(`Rhat`, `R*hat`)) * 1.1)
+  range1 = range(data %>% dplyr::select(`Rhat`, `R*hat`)) * c(.9, 1.1)
 
   data %>%
     plotly::plot_ly(
       alpha = 0.6,
       type = 'scatter',
       mode = 'markers',
-      x = ~`RRhat`,
-      y = ~`RR*`,
+      x = ~`Rhat`,
+      y = ~`R*hat`,
       name = "sim. results"
       ) %>%
     plotly::add_lines(
