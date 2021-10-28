@@ -15,8 +15,15 @@ gen_tab1 = function(
   set.seed(1)
 
   tab1 =
-    tidyr::expand_grid(...) %>%
-    reporting_multiplier()
+    tidyr::expand_grid(...)
+
+  theoretical_results =
+    do.call(reporting_multiplier,
+            tab1 %>% select(any_of(names(formals(reporting_multiplier)))))
+
+  tab1 %<>% bind_cols(
+    theoretical_results %<>% select(-any_of(names(tab1)))
+  )
 
   all_results = NULL
   #TODO: decomp into `run_sims_and_summarize()`
@@ -50,12 +57,18 @@ gen_tab1 = function(
       all_results %>% dplyr::select(
         `\\bar{\\hat{K}}`,
         `SD(\\hat{K})`,
-        `\\% \\{\\hat{R^*} < R\\}`,
-        `\\% \\{\\hat{R^*} < \\hat{R}\\}`
+        `\\% \\{\\hat{R}^* < R\\}`,
+        `\\% \\{\\hat{R}^* < \\hat{R}\\}`
       )
     )
+  names_to_replace = names(all_results) %in% varmap_sl
+  names(all_results)[names_to_replace] = varmap_ls[names(all_results)[names_to_replace]]
 
   names(all_results) = paste("$", names(all_results), "$", sep = "")
 
+  all_results %<>%
+    mutate(
+      across(where(is.numeric), round, digits = 3)
+    )
   return(all_results)
 }

@@ -29,7 +29,7 @@ RR_scatterplots = function(data)
 
     plotly::layout(
       showlegend = FALSE,
-      title = plotly::TeX("\\text{Scatterplot of }\\hat{R^*}\\text{ versus }\\hat{R}"),
+      title = plotly::TeX("\\text{Scatterplot of }\\hat{R}^*\\text{ versus }\\hat{R}"),
       xaxis = list(
         # range = range1,
         title = plotly::TeX("\\text{Est. Relative Risk with True Counts }(\\hat{R})")
@@ -37,7 +37,7 @@ RR_scatterplots = function(data)
       ),
       yaxis = list(
         # range = range1,
-        title = plotly::TeX("\\text{Est. RR with Available Data }(\\hat{R^*})")
+        title = plotly::TeX("\\text{Est. RR with Available Data }(\\hat{R}^*)")
 
       )
     ) %>%

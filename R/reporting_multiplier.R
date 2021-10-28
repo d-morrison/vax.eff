@@ -14,7 +14,6 @@
 #' @export
 #'
 reporting_multiplier = function(
-  data = tibble(`p(V)`,`p(E|!V)`,`p(E|V)`,`p(V*|V)`,`p(V*)`,`p(E*|E)`,`p(L|V*E*)`, R),
   `p(V)` = .4,
   `p(E|!V)` = .0014,
   R = .25,
@@ -26,7 +25,7 @@ reporting_multiplier = function(
 )
 {
   temp =
-    data %>%
+    tibble(`p(V)`,`p(E|!V)`,`p(E|V)`,`p(V*|V)`,`p(V*)`,`p(E*|E)`,`p(L|V*E*)`, R) %>%
     mutate(
       num = `p(L|V*E*)` * (1 - `p(V*)`),
       denom =  1 - (`p(V*)`/ `p(V*|V)`) * (1 - R * (1 - `p(V*|V)` * `p(L|V*E*)`)),

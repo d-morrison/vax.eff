@@ -19,10 +19,10 @@ sim_results_table = function(
       `R^*` = theoretical_results %>% dplyr::pull(`R*`),
       `\\bar{\\hat{K}}` = mean(`R*hat`/true_R),
       `SD(\\hat{K})` = sd(`R*hat`/true_R),
-      `\\bar{\\hat{R^*}}` = mean(`R*hat`),
-      `SD(\\hat{R^*})` = sd(`R*hat`),
-      `\\% \\{\\hat{R^*} < R\\}` = mean(`R*hat` < true_R) * 100,
-      `\\% \\{\\hat{R^*} < \\hat{R}\\}` = mean(`R*hat` < `Rhat`) * 100
+      `\\bar{\\hat{R}^*}` = mean(`R*hat`),
+      `SD(\\hat{R}^*)` = sd(`R*hat`),
+      `\\% \\{\\hat{R}^* < R\\}` = mean(`R*hat` < true_R) * 100,
+      `\\% \\{\\hat{R}^* < \\hat{R}\\}` = mean(`R*hat` < `Rhat`) * 100
     )
 
 
