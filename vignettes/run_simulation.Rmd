@@ -1,11 +1,11 @@
 ---
 title: "Results"
-# output: word_document
-output: rmarkdown::html_vignette
-vignette: >
-  %\VignetteIndexEntry{run_simulation}
-  %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteEncoding{UTF-8}
+output: word_document
+# output: rmarkdown::html_vignette
+# vignette: >
+#   %\VignetteIndexEntry{run_simulation}
+#   %\VignetteEngine{knitr::rmarkdown}
+#   %\VignetteEncoding{UTF-8}
 ---
 
 ```{r, include = FALSE}
@@ -103,7 +103,7 @@ rD = .7
 rV = .9
 `N*` = 11 * 10^6
 
-all_results = gen_tab1(pV = pV, rD = rD, rV = rV, `mu(N*)` = `N*`,
+all_results = gen_tab1(`p(V)` = pV, `p(E*|E)` = rD, `p(V*|V)` = rV, `mu(N*)` = `N*`,
                        `R` = c(1, .25),
                        `p(L|V*E*)` = c(.95, .9, .7))
 ```
@@ -127,7 +127,7 @@ pL = .9
 multiplier = c(1.2, 1.1, 1.05, 1, .95, .9, .8)
 `N*` = 11 * 10^6 * multiplier
 
-all_results = gen_tab1(pV = pV, rD = rD, rV = rV, `mu(N*)` = `N*`,
+all_results = gen_tab1(`p(V)` = pV, `p(E*|E)` = rD, `p(V*|V)` = rV, `mu(N*)` = `N*`,
                        `R` = R,
                        `p(L|V*E*)` = pL) %>%
   rename(`$N^*$` = `$mu(N*)$`) %>%
@@ -140,7 +140,7 @@ all_results = bind_cols(
 
 ```
 
-Simulation results for varying $N^*$ (with $P(V) = `r pV`$, $r_D = `r rD`$, $r_V = `r rV`$, $P_L = `r pL`$, $R = `r R`$):
+Simulation results for varying $N^*$ (with $P(V) = `r pV`$, $r_D = `r rD`$, $r_V = `r rV`$, $p_L = `r pL`$, and $R = `r R`$):
 
 ```{r, results = 'asis'}
 knitr::kable(all_results, format = "markdown")

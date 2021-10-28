@@ -19,7 +19,7 @@ gen_tab1 = function(
 
   theoretical_results =
     do.call(reporting_multiplier,
-            tab1 %>% select(any_of(names(formals(reporting_multiplier)))))
+            tab1)
 
   tab1 %<>% bind_cols(
     theoretical_results %<>% select(-any_of(names(tab1)))

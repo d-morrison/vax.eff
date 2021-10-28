@@ -21,7 +21,10 @@ reporting_multiplier = function(
   `p(V*|V)` = 0.75,
   `p(V*)` = `p(V*|V)` * `p(V)`,
   `p(E*|E)` = 0.75,
-  `p(L|V*E*)` = 0.75
+  `p(L|V*E*)` = 0.75,
+  `mu(N*)` = NULL,
+  `sd(N*)` = NULL,
+  `bias(N*)` = NULL
 )
 {
   temp =
