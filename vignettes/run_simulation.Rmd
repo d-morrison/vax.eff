@@ -30,18 +30,18 @@ library(scales)
 
 ## Figure 1
 
-Relationship of bias factor $K = R^*/R$, linkage probability $P_L$, and vaccination reporting probability,
-given $P(V^*) = 0.5$ and $R = 0.25$.
+Relationship of bias factor $K = R^*/R$, linkage probability $P_L$, and vaccination reporting probability $r_V$,
+given $P(V) = 0.75$ and $R = 0.25$.
 
 ```{r, fig.width=6, fig.height=4}
 # fig.width=6, fig.height=4, dpi=300
-`pV*` = 0.5
+# `pV*` = 0.5
 R = 0.25
 
 f1 = function(pL, rV) 
 {
   reporting_multiplier(
-    `p(V)` = `pV*`/ rV,
+    `p(V)` = .75,
     `p(E|!V)` = NA,
     R = R,
     `p(V*|V)` = rV,
@@ -59,7 +59,7 @@ plot1 = ggplot() +
   geom_function(aes(col = "0.9"), fun = function(x) f1(x, rV = 0.9)) +
   geom_function(aes(col = "1.0"), fun = function(x) f1(x, rV = 1.0)) +
   theme_bw() +
-  xlab(latex2exp::TeX("p_L = Pr(Records Linked | Event and Vaccine Recorded)")) +
+  xlab(latex2exp::TeX("p_L = Pr(Records Linked | Event and Vaccination Both Recorded)")) +
   ylab(latex2exp::TeX("K = R^*/R")) +
   # abline(h = 0, col = "black") +
   labs(color = latex2exp::TeX("r_V"))
