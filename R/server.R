@@ -21,8 +21,7 @@ server = function(input, output, session)
     {
       sim_data_binom(
         N = as.integer(input$N),
-        `bias(N*)` = input$`N*` - input$N,
-        `sd(N*)` = 0,
+        `N*` = input$`N*`,
         `p(V)` = input$pV,
         `p(V*|V)` = input$rV,
         `p(E*|E)` = input$rE,
@@ -38,11 +37,11 @@ server = function(input, output, session)
     shiny::reactive(
       {
         reporting_multiplier(
+          `N` = input$N,
+          `N*` = input$`N*`,
           `p(V)` = input$pV,
           `p(V*|V)` = input$rV,
-          `p(E*|E)` = input$rE,
           `p(L|V*E*)` = input$pL,
-          `p(E|!V)` = input$pE,
           R = input$RR
         )
       }

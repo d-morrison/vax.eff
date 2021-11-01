@@ -72,7 +72,7 @@ vaxEstApp = function(...)
                                          "Actual relative risk (Vaccinated/Not, \\(R\\))",
                                          min = 0,
                                          max = 1,
-                                         value = .25),
+                                         value = .2),
           shinyWidgets::autonumericInput("rE",
                                          step = .01,
                                          ("Pr(record | event) (\\(r_D\\))"),

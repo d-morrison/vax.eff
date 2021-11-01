@@ -52,11 +52,14 @@ gen_tab1 = function(
       tab1 %>%
         select(
           all_of(names(list(...))),
-          K = `R*/R`) %>%
+          K = `R*/R`,
+          `R^*` = `R*`) %>%
         remove_constant(),
       all_results %>% dplyr::select(
         `\\bar{\\hat{K}}`,
         `SD(\\hat{K})`,
+        `\\bar{\\hat{R}^*}`,
+        `SD(\\hat{R}^*)`,
         `\\% \\{\\hat{R}^* < R\\}`,
         `\\% \\{\\hat{R}^* < \\hat{R}\\}`
       )

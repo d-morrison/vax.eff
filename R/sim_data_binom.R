@@ -19,12 +19,10 @@
 sim_data_binom = function(
   # data = tibble(`p(V)`,`p(E|!V)`,`p(E|V)`,`p(V*|V)`,`p(V*)`,`p(E*|E)`,`p(L|V*E*)`, R),
   N = 11 * 10^6,
-  `bias(N*)` = 0,
-  `sd(N*)` = 0,
-  `mu(N*)` = N + `bias(N*)`,
+  `N*` = N,
   `p(V)` = .4,
   `p(E|!V)` = .0014,
-  R = .25,
+  R = .2,
   `p(E|V)` = `p(E|!V)` * R,
   `p(V*|V)` = 0.75,
   `p(E*|E)` = 0.75,
@@ -52,7 +50,7 @@ sim_data_binom = function(
     `E*` = `V*E*` + `!V*E*` + `!VE*`,
     `!V` = N - V,
 
-    `N*` = rnorm(n = n_sims, mean = `mu(N*)`, sd = `sd(N*)`),
+    `N*` = `N*`,
 
     `p(E*|V*)` = L/`V*`,
     `p(E*|!V*)` = (`E*` - L) / (`N*` - `V*`),

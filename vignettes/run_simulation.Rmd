@@ -14,7 +14,8 @@ knitr::opts_chunk$set(
   echo = FALSE,
   comment = "#>"
 )
-library(vax.eff)
+# library(vax.eff)
+devtools::load_all()
 library(tidyverse)
 library(magrittr)
 library(pander)
@@ -26,49 +27,70 @@ library(latex2exp)
 library(janitor)
 library(scales)
 
+panderOptions('table.split.table', Inf)
+panderOptions("keep.trailing.zeros", TRUE)
 ```
 
 ## Figure 1
 
+```{r}
+R = 0.2
+pV = .75
+
+```
+
 Relationship of bias factor $K = R^*/R$, linkage probability $P_L$, and vaccination reporting probability $r_V$,
-given $P(V) = 0.75$ and $R = 0.25$.
+given $P(V) = `r pV`$, $R = `r R`$, and $N^* = N$.
 
 ```{r, fig.width=6, fig.height=4}
 # fig.width=6, fig.height=4, dpi=300
 # `pV*` = 0.5
-R = 0.25
-
 f1 = function(pL, rV) 
 {
   reporting_multiplier(
-    `p(V)` = .75,
-    `p(E|!V)` = NA,
+    
+    `p(V)` = pV,
     R = R,
     `p(V*|V)` = rV,
-    `p(E*|E)` = NA,
-    `p(L|V*E*)` = pL) %>% pull(`R*/R`)
+    `p(L|V*E*)` = pL) %>% pull(`R*`)
   
 }
 
-plot1 = ggplot() +
-  xlim(0.5,1) +
-  expand_limits(y = 0) +
-  geom_function(aes(col = "0.6"), fun = function(x) f1(x, rV = 0.6)) +
-  geom_function(aes(col = "0.7"), fun = function(x) f1(x, rV = 0.7)) +
-  geom_function(aes(col = "0.8"), fun = function(x) f1(x, rV = 0.8)) +
-  geom_function(aes(col = "0.9"), fun = function(x) f1(x, rV = 0.9)) +
-  geom_function(aes(col = "1.0"), fun = function(x) f1(x, rV = 1.0)) +
-  theme_bw() +
-  xlab(latex2exp::TeX("p_L = Pr(Records Linked | Event and Vaccination Both Recorded)")) +
-  ylab(latex2exp::TeX("K = R^*/R")) +
-  # abline(h = 0, col = "black") +
-  labs(color = latex2exp::TeX("r_V"))
+rVs = (6:10)/10
+rv_labels = paste("r_V =", formatC(rVs, format = "f", digits = 1 ))
 
+plot1 = ggplot() +
+  xlim(0.5,1.07) +
+  
+  expand_limits(y = 0) +
+  geom_function(fun = function(x) f1(x, rV = 0.6), xlim = c(0.5,1)) +
+  geom_function(fun = function(x) f1(x, rV = 0.7), xlim = c(0.5,1)) +
+  geom_function(fun = function(x) f1(x, rV = 0.8), xlim = c(0.5,1)) +
+  geom_function(fun = function(x) f1(x, rV = 0.9), xlim = c(0.5,1)) +
+  geom_function(fun = function(x) f1(x, rV = 1.0), xlim = c(0.5,1)) +
+  # geom_hline(yintercept = R, col = "black", linetype = 2) +
+  geom_segment(aes(x = .5, xend = 1, y = R, yend = R), linetype = 2) + 
+  annotate("text", 
+            parse = TRUE,
+           # fill = "white",
+           label = latex2exp::TeX(rv_labels, output = "character"), x = 1.04, y = f1(1, rVs) + .001) +
+  theme_bw() +
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank()) +
+  # guides(col = NULL) + 
+  xlab(latex2exp::TeX("p_L = Pr(Records Linked | Event and Vaccination Both Recorded)")) +
+  ylab(latex2exp::TeX("R^* = Estimated Relative Risk (Vaccinated/Not)")) +
+  
+  labs(color = latex2exp::TeX("r_V")) + 
+  scale_y_continuous(
+    limits = c(0,0.4),
+     sec.axis = sec_axis( trans=~ (1 - .) * 100, name="Estimated Vaccine Efficacy (%)")
+  )
 
 print(plot1)
 
 
 ```
+
 
 ## Table 1
 
@@ -77,10 +99,12 @@ print(plot1)
 pV = .75
 rD = .9
 rV = .9
-`N*` = 11 * 10^6
+N = 11 * 10^6
+`N*` = N
 
-all_results = gen_tab1(`p(V)` = pV, `p(E*|E)` = rD, `p(V*|V)` = rV, `mu(N*)` = `N*`,
-                       `R` = c(1, .25),
+all_results = gen_tab1(`p(V)` = pV, `p(E*|E)` = rD, `p(V*|V)` = rV, 
+                       `N*` = `N*`,
+                       `R` = c(1, .2),
                        `p(L|V*E*)` = c(.95, .9, .7))
 
 ```
@@ -89,7 +113,7 @@ Simulation results with $P(V) = `r pV`$, $r_D = `r rD`$, $r_V = `r rV`$, and $N^
 
 ```{r, results = 'asis'}
 
-knitr::kable(all_results, format = "markdown")
+pander::pander(all_results)
 
 ```
 
@@ -101,17 +125,19 @@ knitr::kable(all_results, format = "markdown")
 pV = .75
 rD = .7
 rV = .9
-`N*` = 11 * 10^6
+N = 11 * 10^6
+`N*` = N
 
-all_results = gen_tab1(`p(V)` = pV, `p(E*|E)` = rD, `p(V*|V)` = rV, `mu(N*)` = `N*`,
-                       `R` = c(1, .25),
+all_results = gen_tab1(`p(V)` = pV, `p(E*|E)` = rD, `p(V*|V)` = rV, 
+                       `N*` = `N*`,
+                       `R` = c(1, .2),
                        `p(L|V*E*)` = c(.95, .9, .7))
 ```
 
 Simulation results with $P(V) = `r pV`$, $r_D = `r rD`$, $r_V = `r rV`$, and $N^* = N = 11 * 10^6$:
 
 ```{r, results = 'asis'}
-knitr::kable(all_results, format = "markdown")
+pander::pander(all_results)
 ```
 
 
@@ -122,15 +148,19 @@ knitr::kable(all_results, format = "markdown")
 pV = .75
 rD = .9
 rV = .9
-R = .25
+R = .2
 pL = .9
+N = 11 * 10^6
 multiplier = c(1.2, 1.1, 1.05, 1, .95, .9, .8)
-`N*` = 11 * 10^6 * multiplier
+`N*` = N * multiplier
 
-all_results = gen_tab1(`p(V)` = pV, `p(E*|E)` = rD, `p(V*|V)` = rV, `mu(N*)` = `N*`,
+all_results = gen_tab1(`p(V)` = pV, 
+                       `p(E*|E)` = rD, 
+                       `p(V*|V)` = rV, 
+                       `N*` = `N*`,
                        `R` = R,
                        `p(L|V*E*)` = pL) %>%
-  rename(`$N^*$` = `$mu(N*)$`) %>%
+  rename(`$N^*$` = `$N*$`) %>%
   mutate(`$N^*$` = scales::number(`$N^*$`, big.mark = ","))
 
 all_results = bind_cols(
@@ -143,7 +173,5 @@ all_results = bind_cols(
 Simulation results for varying $N^*$ (with $P(V) = `r pV`$, $r_D = `r rD`$, $r_V = `r rV`$, $p_L = `r pL`$, and $R = `r R`$):
 
 ```{r, results = 'asis'}
-knitr::kable(all_results, format = "markdown")
+pander(all_results)
 ```
-
-Note: we haven't worked out yet how $N^* \ne N$ affects $K$.
