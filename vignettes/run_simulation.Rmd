@@ -43,52 +43,20 @@ Relationship of bias factor $K = R^*/R$, linkage probability $P_L$, and vaccinat
 given $P(V) = `r pV`$, $R = `r R`$, and $N^* = N$.
 
 ```{r, fig.width=6, fig.height=4}
-# fig.width=6, fig.height=4, dpi=300
-# `pV*` = 0.5
-f1 = function(pL, rV) 
-{
-  reporting_multiplier(
-    
-    `p(V)` = pV,
-    R = R,
-    `p(V*|V)` = rV,
-    `p(L|V*E*)` = pL) %>% pull(`R*`)
-  
-}
 
-rVs = (6:10)/10
-rv_labels = paste("r_V =", formatC(rVs, format = "f", digits = 1 ))
+fig_1 = fig1(
+  pV = pV,
+  R = R,
+  f = 0,
+  lwd = .5,
+  n_points = 251,
+  label_x = 1.065,
+  margin_offset = .05)
 
-plot1 = ggplot() +
-  xlim(0.5,1.07) +
-  
-  expand_limits(y = 0) +
-  geom_function(fun = function(x) f1(x, rV = 0.6), xlim = c(0.5,1)) +
-  geom_function(fun = function(x) f1(x, rV = 0.7), xlim = c(0.5,1)) +
-  geom_function(fun = function(x) f1(x, rV = 0.8), xlim = c(0.5,1)) +
-  geom_function(fun = function(x) f1(x, rV = 0.9), xlim = c(0.5,1)) +
-  geom_function(fun = function(x) f1(x, rV = 1.0), xlim = c(0.5,1)) +
-  # geom_hline(yintercept = R, col = "black", linetype = 2) +
-  geom_segment(aes(x = .5, xend = 1, y = R, yend = R), linetype = 2) + 
-  annotate("text", 
-            parse = TRUE,
-           # fill = "white",
-           label = latex2exp::TeX(rv_labels, output = "character"), x = 1.04, y = f1(1, rVs) + .001) +
-  theme_bw() +
-  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank()) +
-  # guides(col = NULL) + 
-  xlab(latex2exp::TeX("p_L = Pr(Records Linked | Event and Vaccination Both Recorded)")) +
-  ylab(latex2exp::TeX("R^* = Estimated Relative Risk (Vaccinated/Not)")) +
-  
-  labs(color = latex2exp::TeX("r_V")) + 
-  scale_y_continuous(
-    limits = c(0,0.4),
-     sec.axis = sec_axis( trans=~ (1 - .) * 100, name="Estimated Vaccine Efficacy (%)")
-  )
-
-print(plot1)
-
-
+pdf(width = 7, height = 6, "figs/fig1.pdf")
+print(fig_1)
+dev.off()
+print(fig_1)
 ```
 
 

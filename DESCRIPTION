@@ -27,4 +27,5 @@ Imports:
     DT,
     shinyWidgets,
     xtable,
-    janitor
+    janitor,
+    latex2exp

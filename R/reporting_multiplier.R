@@ -18,12 +18,13 @@ reporting_multiplier = function(
   `p(L|V*E*)` = 0.75,
   N = 11 * 10^6,
   `N*` = N,
+  f = (`N*` - N) / N,
   ...
 
 )
 {
 
-  f = (`N*` - N) / N
+
   temp =
     tibble(`p(V)`, `p(V*|V)`, `p(L|V*E*)`, R, f) %>%
     mutate(

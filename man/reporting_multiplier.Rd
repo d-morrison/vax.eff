@@ -11,6 +11,7 @@ reporting_multiplier(
   `p(L|V*E*)` = 0.75,
   N = 11 * 10^6,
   `N*` = N,
+  f = (`N*` - N)/N,
   ...
 )
 }

@@ -69,4 +69,16 @@ server = function(input, output, session)
     RR_scatterplots(data = results())
   )
 
+  output$theorygraph = shiny::renderPlot(
+    {
+      fig1(
+        # n_points = 300
+        lwd = .5,
+        pV = input$eqpV,
+        R = input$eqR,
+        f = input$`eqN*/N` - 1
+      )
+    }
+  )
+
 }
