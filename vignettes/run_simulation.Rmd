@@ -53,9 +53,9 @@ fig_1 = fig1(
   label_x = 1.065,
   margin_offset = .05)
 
-pdf(width = 7, height = 6, "figs/fig1.pdf")
-print(fig_1)
-dev.off()
+# pdf(width = 7, height = 6, "figs/fig1.pdf")
+# print(fig_1)
+# dev.off()
 print(fig_1)
 ```
 
@@ -117,6 +117,41 @@ pV = .75
 rD = .9
 rV = .9
 R = .2
+pL = .9
+N = 11 * 10^6
+multiplier = c(1.2, 1.1, 1.05, 1, .95, .9, .8)
+`N*` = N * multiplier
+
+all_results = gen_tab1(`p(V)` = pV, 
+                       `p(E*|E)` = rD, 
+                       `p(V*|V)` = rV, 
+                       `N*` = `N*`,
+                       `R` = R,
+                       `p(L|V*E*)` = pL) %>%
+  rename(`$N^*$` = `$N*$`) %>%
+  mutate(`$N^*$` = scales::number(`$N^*$`, big.mark = ","))
+
+all_results = bind_cols(
+  "$N^*/N$" = multiplier,
+  all_results
+)
+
+```
+
+Simulation results for varying $N^*$ (with $P(V) = `r pV`$, $r_D = `r rD`$, $r_V = `r rV`$, $p_L = `r pL`$, and $R = `r R`$):
+
+```{r, results = 'asis'}
+pander(all_results)
+```
+
+## Table 4
+
+```{r, include = FALSE}
+
+pV = .75
+rD = .9
+rV = .9
+R = 1
 pL = .9
 N = 11 * 10^6
 multiplier = c(1.2, 1.1, 1.05, 1, .95, .9, .8)
