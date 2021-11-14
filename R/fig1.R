@@ -76,8 +76,9 @@ fig1 = function(
       # limits = c(0,0.4),
       sec.axis = ggplot2::sec_axis(
         # name="Estimated Vaccine Efficacy (%)",
-        name = latex2exp::TeX("\\textit{VE} (\\%)"),
-        trans=~ (1 - .) * 100)
+        name = latex2exp::TeX("\\textit{VE}"),
+        labels = function(x) paste(round(x*100), "%", sep = ""),
+        trans=~ (1 - .))
     ) + ggplot2::expand_limits(y = 0)
 
   print(plot1)

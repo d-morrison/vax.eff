@@ -17,23 +17,25 @@ plot_RR_histograms = function(data)
     alpha = 0.6,
     type = 'histogram',
     histnorm = "probability",
-    name = plotly::TeX("\\hat{R}^*"),
+    name = plotly::TeX("\\hat{R}"),
     x = ~`R*hat`,
     hoverinfo = 'x+y',
+
     nbinsx = 100
   ) %>%
-    plotly::add_histogram(
-      x = ~`Rhat`,
-      alpha = 0.6,
-      type = 'histogram',
-      histnorm = "probability",
-      name = plotly::TeX("\\hat{R}")
-    ) %>%
+    # plotly::add_histogram(
+    #   x = ~`Rhat`,
+    #   alpha = 0.6,
+    #   type = 'histogram',
+    #   histnorm = "probability",
+    #   name = plotly::TeX("\\hat{R}")
+    # ) %>%
 
     plotly::layout(
+      # showLegend = FALSE,
       barmode = "overlay",
       title = plotly::TeX("\\text{Histogram of Estimated Relative Risks}"),
-      legend = list(x = 0.8, y = 0.9),
+      # legend = list(x = 0.8, y = 0.9),
       xaxis = list(
         # range = range1,
         title = plotly::TeX("\\text{Estimated Relative Risk (Vaccinated vs. Not)}")

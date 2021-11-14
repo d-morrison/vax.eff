@@ -76,7 +76,7 @@ server = function(input, output, session)
         lwd = .5,
         pV = input$eqpV,
         R = input$eqR,
-        f = input$`eqN*/N` - 1
+        f = input$eqf
       )
     }
   )
