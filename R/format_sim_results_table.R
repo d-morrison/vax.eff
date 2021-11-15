@@ -15,7 +15,7 @@ format_sim_results_table = function(tab1)
 
   tab2 = xtable::xtable(tab1,
                         display = rep("f", ncol(tab1) + 1),
-                        digits = c(1, rep(3, 3), rep(1, 1)),
+                        digits = c(1, rep(3, 3), rep(1, 1), rep(3, 2)),
                         align = rep("c", ncol(tab1)+1)) %>%
     print(
       include.rownames=FALSE,

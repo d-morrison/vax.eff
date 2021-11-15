@@ -56,12 +56,14 @@ gen_tab1 = function(
           `R^*` = `R*`) %>%
         remove_constant(),
       all_results %>% dplyr::select(
-        `\\bar{\\hat{K}}`,
-        `SD(\\hat{K})`,
-        `\\bar{\\hat{R}^*}`,
-        `SD(\\hat{R}^*)`,
-        `\\% \\{\\hat{R}^* < R\\}`,
-        `\\% \\{\\hat{R}^* < \\hat{R}\\}`
+        # `\\bar{\\hat{K}}`,
+        # `SD(\\hat{K})`,
+        `\\bar{\\hat{R}}`,
+        `SD(\\hat{R})`,
+        `\\% \\{\\hat{R} < R_{\\text{true}}\\}`,
+        # `\\% \\{\\hat{R}^* < \\hat{R}\\}`,
+        `\\bar{\\hat{R}_{\\text{adj}}}`,
+        `SD(\\hat{R}_{\\text{adj}})`
       )
     )
   names_to_replace = names(all_results) %in% varmap_sl

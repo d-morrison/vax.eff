@@ -27,7 +27,12 @@ sim_data_binom = function(
   `p(V*|V)` = 0.75,
   `p(E*|E)` = 0.75,
   `p(L|V*E*)` = 0.75,
-  n_sims = 1000
+  n_sims = 1000,
+  `est f` = (`N*` - N) / N,
+  `est p_L` = `p(L|V*E*)`,
+  `est r_V` = `p(V*|V)`
+
+
 
 )
 {
@@ -57,8 +62,16 @@ sim_data_binom = function(
     `R*hat` = `p(E*|V*)` / `p(E*|!V*)`,
 
     Rhat = (`VE`/`V`) / (`!VE` / `!V`),
-    K = `R*hat`/R
-  )
+    K = `R*hat`/R,
+
+    adj_num = `R*hat` * ((1 + `est f`) * `V*` - (`N*` * `est r_V`)),
+
+    adj_denom = (1 + `est f` ) * (`R*hat` * `V*` * (1 - `est p_L` * `est r_V`) - `est p_L` * `est r_V` * (`N*` - `V*`)),
+
+    Rhat_adj = adj_num / adj_denom
+
+  ) %>%
+  select(-c(adj_num, adj_denom))
 
   return(d1)
 

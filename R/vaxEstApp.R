@@ -127,7 +127,7 @@ vaxEstApp = function(...)
 
               shiny::sliderInput("eqR",
                                  step = .01,
-                                 "Actual relative risk (Vaccinated/Not, \\(R_{true}\\))",
+                                 "Actual relative risk (Vaccinated/Not, \\(R_{\\text{true}}\\))",
                                  min = 0,
                                  max = 2,
                                  value = .2),

@@ -21,7 +21,10 @@ sim_results_table = function(
       # `SD(\\hat{K})` = sd(`R*hat`/true_R),
       `\\bar{\\hat{R}}` = mean(`R*hat`),
       `SD(\\hat{R})` = sd(`R*hat`),
-      `\\% \\{\\hat{R} < R_{\\text{true}}\\}` = mean(`R*hat` < true_R) * 100
+      `\\% \\{\\hat{R} < R_{\\text{true}}\\}` = mean(`R*hat` < true_R) * 100,
+      `\\bar{\\hat{R}_{\\text{adj}}}` = mean(Rhat_adj),
+      `SD(\\hat{R}_{\\text{adj}})` = sd(Rhat_adj),
+
       # `\\% \\{\\hat{R} < \\hat{R}\\}` = mean(`R*hat` < `Rhat`) * 100
     )
 
