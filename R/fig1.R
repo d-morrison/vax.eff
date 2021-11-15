@@ -32,7 +32,9 @@ fig1 = function(
 
   }
 
-  rVs = c(0, .1, .6, .7, .8, .9, 1)
+  rVs = c(
+    # 0, .1,
+    .6, .7, .8, .9, 1)
   rv_labels = paste("\\textit{r_V} =", formatC(rVs, format = "f", digits = 1 ))
 
 
@@ -42,8 +44,8 @@ fig1 = function(
     ggplot2::xlim(0.5, label_x + margin_offset) +
 
     ggplot2::expand_limits(y = 0) +
-    ggplot2::geom_function(n = n_points, size = lwd, fun = function(x) f1(x, rV = 0), xlim = c(0.5,1)) +
-    ggplot2::geom_function(n = n_points, size = lwd, fun = function(x) f1(x, rV = 0.1), xlim = c(0.5,1)) +
+    # ggplot2::geom_function(n = n_points, size = lwd, fun = function(x) f1(x, rV = 0), xlim = c(0.5,1)) +
+    # ggplot2::geom_function(n = n_points, size = lwd, fun = function(x) f1(x, rV = 0.1), xlim = c(0.5,1)) +
     ggplot2::geom_function(n = n_points, size = lwd, fun = function(x) f1(x, rV = 0.6), xlim = c(0.5,1)) +
     ggplot2::geom_function(n = n_points, size = lwd, fun = function(x) f1(x, rV = 0.7), xlim = c(0.5,1)) +
     ggplot2::geom_function(n = n_points, size = lwd, fun = function(x) f1(x, rV = 0.8), xlim = c(0.5,1)) +

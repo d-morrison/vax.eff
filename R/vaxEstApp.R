@@ -92,7 +92,32 @@ vaxEstApp = function(...)
                                              "Pr(linked | both recorded) (\\(p_L\\))",
                                              min = 0,
                                              max = 1,
-                                             value = .75)
+                                             value = .75),
+
+              h4("Analysis inputs for adjusted estimator:"),
+              shinyWidgets::autonumericInput("pL_guess",
+                                             step = .001,
+                                             decimalPlaces = 3,
+                                             "Estimated linkage probability \\((\\hat{p}_L)\\)",
+                                             min = 0,
+                                             max = 1,
+                                             value = .75),
+
+              shinyWidgets::autonumericInput("rV_guess",
+                                             step = .001,
+                                             decimalPlaces = 3,
+                                             "Estimated vaccination reporting probability \\((\\hat{r}_V)\\)",
+                                             min = 0,
+                                             max = 1,
+                                             value = .75),
+
+              shinyWidgets::autonumericInput("fguess",
+                                             step = .001,
+                                             decimalPlaces = 3,
+                                             "Estimated population size bias \\((\\hat{f})\\)",
+                                             min = -1,
+                                             max = 2,
+                                             value = 0)
             ),
 
             # Show a plot of the generated distribution

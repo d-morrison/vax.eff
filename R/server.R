@@ -28,7 +28,10 @@ server = function(input, output, session)
         `p(L|V*E*)` = input$pL,
         `p(E|!V)` = input$pE,
         R = input$RR,
-        n_sims = input$nsims)
+        n_sims = input$nsims,
+        `est f` = input$fguess,
+        `est r_V` = input$rV_guess,
+        `est p_L` = input$pL_guess)
 
     }
   )
