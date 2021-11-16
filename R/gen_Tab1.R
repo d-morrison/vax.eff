@@ -62,7 +62,7 @@ gen_tab1 = function(
         `SD(\\hat{R})`,
         `\\% \\{\\hat{R} < R_{\\text{true}}\\}`,
         # `\\% \\{\\hat{R}^* < \\hat{R}\\}`,
-        `\\bar{\\hat{R}_{\\text{adj}}}`,
+        `\\bar{\\hat{R}}_{\\text{adj}}`,
         `SD(\\hat{R}_{\\text{adj}})`
       )
     )
@@ -73,7 +73,7 @@ gen_tab1 = function(
 
   all_results %<>%
     mutate(
-      across(where(is.numeric), round, digits = 3)
+      across(where(function(x) is.numeric(x) && max(x) <= 1), formatC, digits = 3, format = "f")
     )
   return(all_results)
 }

@@ -14,7 +14,10 @@ sim_data_binom(
   `p(V*|V)` = 0.75,
   `p(E*|E)` = 0.75,
   `p(L|V*E*)` = 0.75,
-  n_sims = 1000
+  n_sims = 1000,
+  `est f` = (`N*` - N)/N,
+  `est p_L` = `p(L|V*E*)`,
+  `est r_V` = `p(V*|V)`
 )
 }
 \arguments{

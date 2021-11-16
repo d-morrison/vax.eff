@@ -4,10 +4,10 @@
 \alias{fig1}
 \title{Title}
 \usage{
-fig1(pV, R, f)
+fig1(pV, R, f, n_points = 201, label_x = 1.05, lwd = 1, margin_offset = 0.02)
 }
 \arguments{
-\item{f}{}
+\item{n_points}{}
 }
 \value{
 

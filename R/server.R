@@ -29,9 +29,9 @@ server = function(input, output, session)
         `p(E|!V)` = input$pE,
         R = input$RR,
         n_sims = input$nsims,
-        `est f` = input$fguess,
-        `est r_V` = input$rV_guess,
-        `est p_L` = input$pL_guess)
+        `est f` = (input$`N*` - input$N) / input$N,
+        `est r_V` = input$rV,
+        `est p_L` =  input$pL)
 
     }
   )
@@ -83,5 +83,35 @@ server = function(input, output, session)
       )
     }
   )
+
+  output$adjustmentgraph = shiny::renderPlot(
+    {
+      adjustment_graph(
+        R = input$est_R_unadjusted,
+        f = input$fguess1,
+        nV = input$calc_nV,
+        N = input$calc_N,
+        lwd = .5
+      )
+    }
+  )
+
+  adjusted_est = shiny::reactive(
+    adjust_RR_estimate(
+      R = input$est_R_unadjusted,
+      pL = input$pL_guess1,
+      rV = input$rV_guess1,
+      f = input$fguess1,
+      nV = input$calc_nV,
+      N = input$calc_N
+    )
+  )
+
+  output$calculator_out =
+    renderUI(
+      withMathJax(
+        paste0("$$\\hat{R}_{\\text{adj}} =", format(adjusted_est(), digits = 3), "$$"))
+    )
+
 
 }

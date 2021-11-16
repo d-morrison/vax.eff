@@ -64,14 +64,16 @@ sim_data_binom = function(
     Rhat = (`VE`/`V`) / (`!VE` / `!V`),
     K = `R*hat`/R,
 
-    adj_num = `R*hat` * ((1 + `est f`) * `V*` - (`N*` * `est r_V`)),
+    Rhat_adj = adjust_RR_estimate(
+      R = `R*hat`,
+      pL = `est p_L`,
+      rV = `est r_V`,
+      f = `est f`,
+      nV = `V*`,
+      N = `N*`
+    )
 
-    adj_denom = (1 + `est f` ) * (`R*hat` * `V*` * (1 - `est p_L` * `est r_V`) - `est p_L` * `est r_V` * (`N*` - `V*`)),
-
-    Rhat_adj = adj_num / adj_denom
-
-  ) %>%
-  select(-c(adj_num, adj_denom))
+  )
 
   return(d1)
 

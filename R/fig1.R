@@ -36,8 +36,11 @@ fig1 = function(
     # 0, .1,
     .6, .7, .8, .9, 1)
   rv_labels = paste("\\textit{r_V} =", formatC(rVs, format = "f", digits = 1 ))
-
-
+  plot_title = paste0(
+    "\\overset{Relationship between \\textit{p_L}, \\textit{r_V}, and \\textit{R}, given}{",
+    "\\textit{p_V} = $", pV,
+    "$, \\textit{R}_{true} = $", R,
+    "$, and \\textit{f} = $", f*100,"$%}")
 
   # extrafont::loadfonts(device = "win")
   plot1 = ggplot2::ggplot() +
@@ -64,6 +67,7 @@ fig1 = function(
              y = f1(1, rVs)) +
     ggplot2::theme_bw() +
     ggplot2::theme(
+      plot.title = ggplot2::element_text(hjust = 0.5),
       text=ggplot2::element_text(size=16,  family="serif"),
       axis.title.x = ggplot2::element_text(size = 20),
       axis.title.y = ggplot2::element_text(angle = 0, vjust = .5, size = 20),
@@ -71,6 +75,7 @@ fig1 = function(
       panel.grid.major = ggplot2::element_blank(), panel.grid.minor = ggplot2::element_blank()) +
     # guides(col = NULL) +
     # xlab(latex2exp::TeX("p_L = Pr(Records Linked | Event and Vaccination Both Recorded)")) +
+    ggplot2::ggtitle(latex2exp::TeX(plot_title)) +
     ggplot2::xlab(latex2exp::TeX("\\textit{p_L}")) +
     ggplot2::ylab(latex2exp::TeX("\\textit{R}")) +
     # ylab(latex2exp::TeX("R^* = Estimated Relative Risk (Vaccinated/Not)")) +
@@ -85,5 +90,5 @@ fig1 = function(
         trans=~ (1 - .))
     ) + ggplot2::expand_limits(y = 0)
 
-  print(plot1)
+  return(plot1)
 }
