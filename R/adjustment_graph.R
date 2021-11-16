@@ -46,7 +46,7 @@ adjustment_graph = function(
 
   plot_title = paste0(
     "\\overset{Relationship between \\textit{p_L}, \\textit{r_V}, and \\hat{\\textit{R}}_{adj}, given}{",
-    "\\textit{R} = $", format(R),
+    "\\textit{\\hat{R}} = $", format(R),
     "$, \\textit{N} = $", format(N, big.mark = ",", scientific = 12),
     "$, \\textit{n}_V = $", format(nV, big.mark = ",", scientific = 12),
     "$, and \\textit{f} = $", f*100, "$%}")
