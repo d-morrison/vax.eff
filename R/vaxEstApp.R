@@ -170,6 +170,57 @@ vaxEstApp = function(...)
               shiny::plotOutput("theorygraph")
             )
           )
+        ),
+
+        tabPanel(
+          "Estimate Adjustment Calculator",
+          shiny::withMathJax(),
+
+          # Application title
+          # shiny::titlePanel(""),
+
+          # Sidebar with a slider input for number of bins
+          shiny::sidebarLayout(
+            shiny::sidebarPanel(
+              h4("Analysis inputs for adjusted estimator:"),
+
+              shinyWidgets::autonumericInput("est_R_unadjusted",
+                                             step = 0,
+                                             decimalPlaces = 3,
+                                             "Unadjusted relative risk estimate \\((R)\\)",
+                                             min = 0,
+                                             # max = Inf,
+                                             value = .2),
+
+              shinyWidgets::autonumericInput("pL_guess1",
+                                             step = 0,
+                                             decimalPlaces = 3,
+                                             "Estimated linkage probability \\((\\hat{p}_L)\\)",
+                                             min = 0,
+                                             max = 1,
+                                             value = .75),
+
+              shinyWidgets::autonumericInput("rV_guess1",
+                                             step = .001,
+                                             decimalPlaces = 3,
+                                             "Estimated vaccination reporting probability \\((\\hat{r}_V)\\)",
+                                             min = 0,
+                                             max = 1,
+                                             value = .75),
+
+              shinyWidgets::autonumericInput("fguess1",
+                                             step = .001,
+                                             decimalPlaces = 3,
+                                             "Estimated population size bias \\((\\hat{f})\\)",
+                                             min = -1,
+                                             max = 2,
+                                             value = 0)
+
+            ),
+
+            shiny::mainPanel()
+
+          )
         )
       )
 
