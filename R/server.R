@@ -17,6 +17,33 @@
 server = function(input, output, session)
 {
 
+  url <- a("https://github.com/d-morrison/vax.eff",
+           href="https://github.com/d-morrison/vax.eff")
+
+  # url2 = a("dmorrison01@ucla.edu", href = "dmorrison01@ucla.edu")
+
+
+  message1 =  'This Shiny app is a companion to the article "Estimating Vaccine Effectiveness from Linking Population-Based Health Registries: Some Sources of Bias", by Ron Brookmeyer and Doug Morrison (currently undergoing peer review).'
+  message4 = "It provides an interactive versions of the simulation study, Figure 1, and the adjusted estimator (Eq. 3) from that paper."
+  message5 = "The code implementing this app and the analyses in the paper is available at "
+
+  message2 = "Questions about the analysis design can be sent to rbrookmeyer at ucla.edu and dmorrison01 at ucla.edu."
+  message6 = "Questions about the implementation can be sent to dmorrison01 at ucla.edu."
+  # message3 = "Download our article preprint from medRxiv:"
+  # message_full = paste(message1, message2, message3, sep = "\n")
+  output$summary =
+    renderUI(column(width = 12,
+      h1("About this app:"),
+      message1,
+      message4,
+      br(),
+      br(),
+      message5,
+      url,
+      br(),
+      br(),
+      message2))
+
   results = shiny::reactive(
     {
       sim_data_binom(
@@ -110,7 +137,7 @@ server = function(input, output, session)
   output$calculator_out =
     renderUI(
       withMathJax(
-        paste0("$$\\hat{R}_{\\text{adj}} =", format(adjusted_est(), digits = 3), "$$"))
+        paste0("$$\\hat{R}_{adj} =", format(adjusted_est(), digits = 3), "$$"))
     )
 
 

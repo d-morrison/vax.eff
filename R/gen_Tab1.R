@@ -60,10 +60,10 @@ gen_tab1 = function(
         # `SD(\\hat{K})`,
         `\\bar{\\hat{R}}`,
         `SD(\\hat{R})`,
-        `\\% \\{\\hat{R} < R_{\\text{true}}\\}`,
+        `\\% \\{\\hat{R} < R_{true}\\}`,
         # `\\% \\{\\hat{R}^* < \\hat{R}\\}`,
-        `\\bar{\\hat{R}}_{\\text{adj}}`,
-        `SD(\\hat{R}_{\\text{adj}})`
+        `\\bar{\\hat{R}}_{adj}`,
+        `SD(\\hat{R}_{adj})`
       )
     )
   names_to_replace = names(all_results) %in% varmap_sl

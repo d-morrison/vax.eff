@@ -18,7 +18,8 @@ fig1 = function(
   n_points = 201,
   label_x = 1.05,
   lwd = 1,
-  margin_offset = .02
+  margin_offset = .02,
+  add_title = TRUE
 )
 {
   f1 = function(pL, rV)
@@ -39,7 +40,7 @@ fig1 = function(
   plot_title = paste0(
     "\\overset{Relationship between \\textit{p_L}, \\textit{r_V}, and \\textit{R}, given}{",
     "\\textit{p_V} = $", pV,
-    "$, \\textit{R}_{true} = $", R,
+    "$, \\textit{R_{true}} = $", R,
     "$, and \\textit{f} = $", f*100,"$%}")
 
   # extrafont::loadfonts(device = "win")
@@ -57,7 +58,7 @@ fig1 = function(
     # geom_hline(yintercept = R, col = "black", linetype = 2) +
     ggplot2::geom_segment(ggplot2::aes(x = .5, xend = 1, y = R, yend = R), linetype = 2) +
     ggplot2::annotate("text",
-             size = 6,
+             size = 5,
              family="serif",
              # angle = 30,
              parse = TRUE,
@@ -75,7 +76,6 @@ fig1 = function(
       panel.grid.major = ggplot2::element_blank(), panel.grid.minor = ggplot2::element_blank()) +
     # guides(col = NULL) +
     # xlab(latex2exp::TeX("p_L = Pr(Records Linked | Event and Vaccination Both Recorded)")) +
-    ggplot2::ggtitle(latex2exp::TeX(plot_title)) +
     ggplot2::xlab(latex2exp::TeX("\\textit{p_L}")) +
     ggplot2::ylab(latex2exp::TeX("\\textit{R}")) +
     # ylab(latex2exp::TeX("R^* = Estimated Relative Risk (Vaccinated/Not)")) +
@@ -84,11 +84,17 @@ fig1 = function(
     ggplot2::scale_y_continuous(
       # limits = c(0,0.4),
       sec.axis = ggplot2::sec_axis(
-        # name="Estimated Vaccine Efficacy (%)",
-        name = latex2exp::TeX("\\textit{VE}"),
-        labels = function(x) paste(round(x*100), "%", sep = ""),
+        # name="Estimated Vaccine Effectiveness (%)",
+        name = latex2exp::TeX("\\textit{VE} (%)"),
+        labels = function(x) paste(round(x*100), #"%",
+                                   sep = ""),
         trans=~ (1 - .))
     ) + ggplot2::expand_limits(y = 0)
+
+  if(add_title)
+  {
+    plot1 = plot1 + ggplot2::ggtitle(latex2exp::TeX(plot_title))
+  }
 
   return(plot1)
 }
