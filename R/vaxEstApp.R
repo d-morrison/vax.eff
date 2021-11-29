@@ -19,8 +19,49 @@ vaxEstApp = function(...)
                            #shiny::titlePanel("Estimating Vaccine Effectiveness from Linking Population-Based Health Registries: Some Sources of Bias"),
                            uiOutput("summary")
                   ),
+
                   tabPanel(
-                    "Simulation",
+                    "Theoretical Results (Fig. 1)",
+                    shiny::withMathJax(),
+
+                    # Application title
+                    # shiny::titlePanel("\\(\\text{Theoretical relationship between }p_L,\\ r_V,\\text{ and }R\\)"),
+
+                    # Sidebar with a slider input for number of bins
+                    shiny::sidebarLayout(
+                      shiny::sidebarPanel(
+                        # chooseSliderSkin("Modern"),
+                        shiny::sliderInput("eqpV",
+                                           step = .01,
+                                           "Actual vaccination rate (\\(p_V\\))",
+                                           min = 0,
+                                           max = 1,
+                                           value = .75),
+
+                        shiny::sliderInput("eqR",
+                                           step = .01,
+                                           "Actual relative risk (Vaccinated/Not, \\(R_{true}\\))",
+                                           min = 0,
+                                           max = 2,
+                                           value = .2),
+
+                        shiny::sliderInput("eqf",
+                                           step = 1,
+                                           "\\(f = (N-N_{true})/N_{true}\\)",
+                                           min = -50,
+                                           max = 200,
+                                           post = "%",
+                                           value = 0),
+                      ),
+
+                      shiny::mainPanel(
+                        shiny::plotOutput(width = "600px", height = "600px", "theorygraph")
+                      )
+                    )
+                  ),
+
+                  tabPanel(
+                    "Simulation Results (Table 2)",
                     shiny::withMathJax(),
 
                     # Application title
@@ -115,47 +156,7 @@ vaxEstApp = function(...)
                     )
                   ),
                   tabPanel(
-                    "Theoretical Results (Fig. 1)",
-                    shiny::withMathJax(),
-
-                    # Application title
-                    # shiny::titlePanel("\\(\\text{Theoretical relationship between }p_L,\\ r_V,\\text{ and }R\\)"),
-
-                    # Sidebar with a slider input for number of bins
-                    shiny::sidebarLayout(
-                      shiny::sidebarPanel(
-                        # chooseSliderSkin("Modern"),
-                        shiny::sliderInput("eqpV",
-                                           step = .01,
-                                           "Actual vaccination rate (\\(p_V\\))",
-                                           min = 0,
-                                           max = 1,
-                                           value = .75),
-
-                        shiny::sliderInput("eqR",
-                                           step = .01,
-                                           "Actual relative risk (Vaccinated/Not, \\(R_{true}\\))",
-                                           min = 0,
-                                           max = 2,
-                                           value = .2),
-
-                        shiny::sliderInput("eqf",
-                                           step = 1,
-                                           "\\(f = (N-N_{true})/N_{true}\\)",
-                                           min = -50,
-                                           max = 200,
-                                           post = "%",
-                                           value = 0),
-                      ),
-
-                      shiny::mainPanel(
-                        shiny::plotOutput(width = "600px", height = "600px", "theorygraph")
-                      )
-                    )
-                  ),
-
-                  tabPanel(
-                    "Estimate Adjustment Calculator",
+                    "Estimate Adjustment Calculator (Eq. 3)",
                     shiny::withMathJax(),
 
                     # Application title

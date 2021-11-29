@@ -24,7 +24,7 @@ server = function(input, output, session)
 
 
   message1 =  'This Shiny app is a supplement to the article "Estimating Vaccine Effectiveness from Linking Population-Based Health Registries: Some Sources of Bias", by Ron Brookmeyer and Doug Morrison (currently undergoing peer review).'
-  message4 = "It provides interactive versions of the simulation study, Figure 1, and the adjusted estimator (Eq. 3) from that paper."
+  message4 = "It provides interactive versions of Figure 1 (theoretical results), Table 2 (simulation results), and Equation 3 (adjustment formula) from that paper."
   message5 = "The code implementing this app and the analyses in the paper is available at "
 
   message2 = "Questions about the analysis design can be sent to rbrookmeyer at ucla.edu and dmorrison01 at ucla.edu."
