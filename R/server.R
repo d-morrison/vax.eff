@@ -27,7 +27,7 @@ server = function(input, output, session)
   message4 = "It provides interactive versions of Figure 1 (theoretical results), Table 2 (simulation results), and Equation 3 (adjustment formula) from that paper."
   message5 = "The code implementing this app and the analyses in the paper is available at "
 
-  message2 = "Questions about the analysis design can be sent to rbrookmeyer at ucla.edu and dmorrison01 at ucla.edu."
+  message2 = "Questions and feedback can be sent to rbrookmeyer at ucla.edu and dmorrison01 at ucla.edu."
   message6 = "Questions about the implementation can be sent to dmorrison01 at ucla.edu."
   # message3 = "Download our article preprint from medRxiv:"
   # message_full = paste(message1, message2, message3, sep = "\n")

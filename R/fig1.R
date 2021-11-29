@@ -19,7 +19,8 @@ fig1 = function(
   label_x = 1.05,
   lwd = 1,
   margin_offset = .02,
-  add_title = TRUE
+  add_title = TRUE,
+  rv_size = 4.5
 )
 {
   f1 = function(pL, rV)
@@ -58,7 +59,7 @@ fig1 = function(
     # geom_hline(yintercept = R, col = "black", linetype = 2) +
     ggplot2::geom_segment(ggplot2::aes(x = .5, xend = 1, y = R, yend = R), linetype = 2) +
     ggplot2::annotate("text",
-             size = 5,
+             size = rv_size,
              family="serif",
              # angle = 30,
              parse = TRUE,
