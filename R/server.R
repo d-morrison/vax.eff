@@ -23,8 +23,8 @@ server = function(input, output, session)
   # url2 = a("dmorrison01@ucla.edu", href = "dmorrison01@ucla.edu")
 
 
-  message1 =  'This Shiny app is a companion to the article "Estimating Vaccine Effectiveness from Linking Population-Based Health Registries: Some Sources of Bias", by Ron Brookmeyer and Doug Morrison (currently undergoing peer review).'
-  message4 = "It provides an interactive versions of the simulation study, Figure 1, and the adjusted estimator (Eq. 3) from that paper."
+  message1 =  'This Shiny app is a supplement to the article "Estimating Vaccine Effectiveness from Linking Population-Based Health Registries: Some Sources of Bias", by Ron Brookmeyer and Doug Morrison (currently undergoing peer review).'
+  message4 = "It provides interactive versions of the simulation study, Figure 1, and the adjusted estimator (Eq. 3) from that paper."
   message5 = "The code implementing this app and the analyses in the paper is available at "
 
   message2 = "Questions about the analysis design can be sent to rbrookmeyer at ucla.edu and dmorrison01 at ucla.edu."
