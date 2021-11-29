@@ -115,7 +115,7 @@ vaxEstApp = function(...)
                     )
                   ),
                   tabPanel(
-                    "Theoretical Results",
+                    "Theoretical Results (Fig. 1)",
                     shiny::withMathJax(),
 
                     # Application title
