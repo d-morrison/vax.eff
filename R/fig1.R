@@ -36,12 +36,12 @@ fig1 = function(
   rVs = c(
     # 0, .1,
     .6, .7, .8, .9, 1)
-  rv_labels = paste("\\textit{r_V} =", formatC(rVs, format = "f", digits = 1 ))
+  rv_labels = paste(r"($\textit{r_V} =$)", formatC(rVs, format = "f", digits = 1 ))
   plot_title = paste0(
-    "\\overset{Relationship between \\textit{p_L}, \\textit{r_V}, and \\textit{R}, given}{",
-    "\\textit{p_V} = $", pV,
-    "$, \\textit{R_{true}} = $", R,
-    "$, and \\textit{f} = $", f*100,"$%}")
+    r"(\overset{Relationship between $\textit{p_L}$, $\textit{r_V}$, and $\textit{R}$, given}{)",
+    r"($\textit{p_V} = )", pV,
+    r"($, $\textit{R_{true}} = )", R,
+    r"($, and $\textit{f} = )", f*100, r"($%})")
 
   # extrafont::loadfonts(device = "win")
   plot1 = ggplot2::ggplot() +
@@ -59,7 +59,7 @@ fig1 = function(
     ggplot2::geom_segment(ggplot2::aes(x = .5, xend = 1, y = R, yend = R), linetype = 2) +
     ggplot2::annotate("text",
              size = 5,
-             family="serif",
+             family="Times",
              # angle = 30,
              parse = TRUE,
              # fill = "white",
@@ -69,23 +69,23 @@ fig1 = function(
     ggplot2::theme_bw() +
     ggplot2::theme(
       plot.title = ggplot2::element_text(hjust = 0.5),
-      text=ggplot2::element_text(size=16,  family="serif"),
+      text = ggplot2::element_text(size=16,  family="Times"),
       axis.title.x = ggplot2::element_text(size = 20),
       axis.title.y = ggplot2::element_text(angle = 0, vjust = .5, size = 20),
       axis.title.y.right = ggplot2::element_text(angle = 0, vjust = .5, size = 20),
       panel.grid.major = ggplot2::element_blank(), panel.grid.minor = ggplot2::element_blank()) +
     # guides(col = NULL) +
     # xlab(latex2exp::TeX("p_L = Pr(Records Linked | Event and Vaccination Both Recorded)")) +
-    ggplot2::xlab(latex2exp::TeX("\\textit{p_L}")) +
-    ggplot2::ylab(latex2exp::TeX("\\textit{R}")) +
+    ggplot2::xlab(latex2exp::TeX(r'($\textit{p_L}$)')) +
+    ggplot2::ylab(latex2exp::TeX(r'($\textit{R}$)')) +
     # ylab(latex2exp::TeX("R^* = Estimated Relative Risk (Vaccinated/Not)")) +
 
-    ggplot2::labs(color = latex2exp::TeX("r_V")) +
+    # ggplot2::labs(color = latex2exp::TeX(r'($r_V$)')) +
     ggplot2::scale_y_continuous(
       # limits = c(0,0.4),
       sec.axis = ggplot2::sec_axis(
         # name="Estimated Vaccine Effectiveness (%)",
-        name = latex2exp::TeX("\\textit{VE} (%)"),
+        name = latex2exp::TeX(r'($\textit{VE}$ (%) )'),
         labels = function(x) paste(round(x*100), #"%",
                                    sep = ""),
         trans=~ (1 - .))

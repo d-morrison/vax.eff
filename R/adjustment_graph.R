@@ -41,15 +41,15 @@ adjustment_graph = function(
   rVs = c(
     # 0, .1,
     .6, .7, .8, .9, 1)
-  rv_labels = paste("\\textit{r_V} =", formatC(rVs, format = "f", digits = 1 ))
+  rv_labels = paste(r"($\textit{r_V}$ =)", formatC(rVs, format = "f", digits = 1 ))
 
 
   plot_title = paste0(
-    "\\overset{Relationship between \\textit{p_L}, \\textit{r_V}, and \\hat{\\textit{R}}_{adj}, given}{",
-    "\\textit{\\hat{R}} = $", format(R),
-    "$, \\textit{N} = $", format(N, big.mark = ",", scientific = 12),
-    "$, \\textit{N_V} = $", format(nV, big.mark = ",", scientific = 12),
-    "$, and \\textit{f} = $", f*100, "$%}")
+    r"(\overset{Relationship between $\textit{p_L}$, $\textit{r_V}$, and $\hat{\textit{R}}_{adj}$, given}{)",
+    r"($\textit{\hat{R}}$ = )", format(R),
+    r"(, $\textit{N}$ = )", format(N, big.mark = ",", scientific = 12),
+    r"(, $\textit{N_V}$ = )", format(nV, big.mark = ",", scientific = 12),
+    r"(, and $\textit{f}$ = )", f*100, "%}")
 
 
   # extrafont::loadfonts(device = "win")
@@ -67,7 +67,7 @@ adjustment_graph = function(
     ggplot2::geom_segment(ggplot2::aes(x = xmin, xend = 1, y = R, yend = R), linetype = 2) +
     ggplot2::annotate("text",
                       size = 6,
-                      family="serif",
+                      family="Times",
                       # angle = 30,
                       parse = TRUE,
                       # fill = "white",
@@ -77,7 +77,7 @@ adjustment_graph = function(
     ggplot2::theme_bw() +
     ggplot2::theme(
       plot.title = ggplot2::element_text(hjust = 0.5),
-      text=ggplot2::element_text(size=16,  family="serif"),
+      text= ggplot2::element_text(size=16,  family = "Times"),
       axis.title.x = ggplot2::element_text(size = 20),
       axis.title.y = ggplot2::element_text(angle = 0, vjust = .5, size = 20),
       # axis.title.y.right = ggplot2::element_text(angle = 0, vjust = .5, size = 20),
@@ -85,11 +85,11 @@ adjustment_graph = function(
     # guides(col = NULL) +
     # xlab(latex2exp::TeX("p_L = Pr(Records Linked | Event and Vaccination Both Recorded)")) +
     ggplot2::ggtitle(latex2exp::TeX(plot_title)) +
-    ggplot2::xlab(latex2exp::TeX("\\textit{p_L}")) +
-    ggplot2::ylab(latex2exp::TeX("\\textit{\\hat{R}}_{adj}")) +
+    ggplot2::xlab(latex2exp::TeX(r"($\textit{p_L}$)")) +
+    ggplot2::ylab(latex2exp::TeX(r"($\textit{\hat{R}}_{adj}$)")) +
     # ylab(latex2exp::TeX("R^* = Estimated Relative Risk (Vaccinated/Not)")) +
     # ggplot2::expand_limits(y = 0) +
-    ggplot2::labs(color = latex2exp::TeX("r_V"))
+    ggplot2::labs(color = latex2exp::TeX(r"($r_V$)"))
 
 
   return(plot1)
