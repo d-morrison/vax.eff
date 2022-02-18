@@ -26,6 +26,8 @@ sim_data_binom = function(
   `p(E|V)` = `p(E|!V)` * R,
   `p(V*|V)` = 0.75,
   `p(E*|E)` = 0.75,
+  `p(E*|E,V)` = `p(E*|E)`,
+  `p(E*|E,!V)` = `p(E*|E)`,
   `p(L|V*E*)` = 0.75,
   n_sims = 1000,
   `est f` = (`N*` - N) / N,
@@ -42,14 +44,14 @@ sim_data_binom = function(
     `V`     = rbinom(n = n_sims, size = N,        p = `p(V)`),
     `V*`    = rbinom(n = n_sims, size = V,        p = `p(V*|V)`),
     `V*E`   = rbinom(n = n_sims, size = `V*`,     p = `p(E|V)`),
-    `V*E*`  = rbinom(n = n_sims, size = `V*E`,    p = `p(E*|E)`),
+    `V*E*`  = rbinom(n = n_sims, size = `V*E`,    p = `p(E*|E,V)`),
     `L`     = rbinom(n = n_sims, size = `V*E*`,   p = `p(L|V*E*)`),
 
     `!V*E`  = rbinom(n = n_sims, size = V - `V*`, p = `p(E|V)`),
-    `!V*E*` = rbinom(n = n_sims, size = `!V*E`,   p = `p(E*|E)`),
+    `!V*E*` = rbinom(n = n_sims, size = `!V*E`,   p = `p(E*|E,V)`),
 
     `!VE`   = rbinom(n = n_sims, size = N - V,    p = `p(E|!V)`),
-    `!VE*`  = rbinom(n = n_sims, size = `!VE`,    p = `p(E*|E)`),
+    `!VE*`  = rbinom(n = n_sims, size = `!VE`,    p = `p(E*|E,!V)`),
 
     `VE` = `V*E` + `!V*E`,
     `E*` = `V*E*` + `!V*E*` + `!VE*`,
