@@ -2,7 +2,7 @@ library(dplyr)
 
 var_map = tribble(
   ~short, ~long,
-  "p_L", "p(L|V*E*)",
+  "p_L", "p(L|V*,E*)",
   "p_V", "p(V)",
   "r_V", "p(V*|V)",
   "r_E", "p(E*|E)"

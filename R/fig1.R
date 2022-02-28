@@ -30,7 +30,7 @@ fig1 = function(
       `p(V)` = pV,
       R = R,
       `p(V*|V)` = rV,
-      `p(L|V*E*)` = pL) %>% pull(`R*`)
+      `p(L|V*,E*)` = pL) %>% pull(`R*`)
 
   }
 

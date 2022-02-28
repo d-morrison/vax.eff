@@ -77,7 +77,7 @@ N = 11 * 10^6
 all_results = gen_tab1(`p(V)` = pV, `p(E*|E)` = rD, `p(V*|V)` = rV, 
                        `N*` = `N*`,
                        `R` = c(1, .2),
-                       `p(L|V*E*)` = c(.95, .9, .7))
+                       `p(L|V*,E*)` = c(.95, .9, .7))
 
 ```
 
@@ -103,7 +103,7 @@ N = 11 * 10^6
 all_results = gen_tab1(`p(V)` = pV, `p(E*|E)` = rD, `p(V*|V)` = rV, 
                        `N*` = `N*`,
                        `R` = c(1, .2),
-                       `p(L|V*E*)` = c(.95, .9, .7))
+                       `p(L|V*,E*)` = c(.95, .9, .7))
 ```
 
 Simulation results with $P(V) = `r pV`$, $r_D = `r rD`$, $r_V = `r rV`$, and $N^* = N = 11 * 10^6$:
@@ -131,7 +131,7 @@ all_results = gen_tab1(`p(V)` = pV,
                        `p(V*|V)` = rV, 
                        `N*` = `N*`,
                        `R` = R,
-                       `p(L|V*E*)` = pL) %>%
+                       `p(L|V*,E*)` = pL) %>%
   rename(`$N^*$` = `$N*$`) %>%
   mutate(`$N^*$` = scales::number(`$N^*$`, big.mark = ","))
 
@@ -166,7 +166,7 @@ all_results = gen_tab1(`p(V)` = pV,
                        `p(V*|V)` = rV, 
                        `N*` = `N*`,
                        `R` = R,
-                       `p(L|V*E*)` = pL) %>%
+                       `p(L|V*,E*)` = pL) %>%
   rename(`$N^*$` = `$N*$`) %>%
   mutate(`$N^*$` = scales::number(`$N^*$`, big.mark = ","))
 

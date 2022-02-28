@@ -4,7 +4,7 @@
 #' @param R
 #' @param `p(V*|V)`
 #' @param N
-#' @param `p(L|V*E*)`
+#' @param `p(L|V*,E*)`
 #' @param `N*`
 #' @param ... does nothing
 #'
@@ -15,7 +15,7 @@ reporting_multiplier = function(
   `p(V)` = .4,
   R = .25,
   `p(V*|V)` = 0.75,
-  `p(L|V*E*)` = 0.75,
+  `p(L|V*,E*)` = 0.75,
   N = 11 * 10^6,
   `N*` = N,
   f = (`N*` - N) / N,
@@ -26,10 +26,10 @@ reporting_multiplier = function(
 
 
   temp =
-    tibble(`p(V)`, `p(V*|V)`, `p(L|V*E*)`, R, f) %>%
+    tibble(`p(V)`, `p(V*|V)`, `p(L|V*,E*)`, R, f) %>%
     mutate(
-      num = `p(L|V*E*)` * (1 +  f - `p(V*|V)` * `p(V)`),
-      denom =  1 - `p(V)` + R * `p(V)` * (1 -  `p(V*|V)` * `p(L|V*E*)`),
+      num = `p(L|V*,E*)` * (1 +  f - `p(V*|V)` * `p(V)`),
+      denom =  1 - `p(V)` + R * `p(V)` * (1 -  `p(V*|V)` * `p(L|V*,E*)`),
       `R*/R` = num/denom,
       `R*` = R * `R*/R`) %>%
     select(-c(num, denom, f))

@@ -7,7 +7,7 @@
 #' @param `p(E|V)`
 #' @param `p(V*|V)`
 #' @param `p(E*|E)`
-#' @param `p(L|V*E*)`
+#' @param `p(L|V*,E*)`
 #' @param n_sims
 #'
 #' @return
@@ -17,7 +17,7 @@
 #' @importFrom magrittr "%>%" "%<>%"
 
 sim_data_binom = function(
-  # data = tibble(`p(V)`,`p(E|!V)`,`p(E|V)`,`p(V*|V)`,`p(V*)`,`p(E*|E)`,`p(L|V*E*)`, R),
+  # data = tibble(`p(V)`,`p(E|!V)`,`p(E|V)`,`p(V*|V)`,`p(V*)`,`p(E*|E)`,`p(L|V*,E*)`, R),
   N = 11 * 10^6,
   `N*` = N,
   `p(V)` = .4,
@@ -28,10 +28,10 @@ sim_data_binom = function(
   `p(E*|E)` = 0.75,
   `p(E*|E,V)` = `p(E*|E)`,
   `p(E*|E,!V)` = `p(E*|E)`,
-  `p(L|V*E*)` = 0.75,
+  `p(L|V*,E*)` = 0.75,
   n_sims = 1000,
   `est f` = (`N*` - N) / N,
-  `est p_L` = `p(L|V*E*)`,
+  `est p_L` = `p(L|V*,E*)`,
   `est r_V` = `p(V*|V)`
 
 
@@ -45,7 +45,7 @@ sim_data_binom = function(
     `V*`    = rbinom(n = n_sims, size = V,        p = `p(V*|V)`),
     `V*E`   = rbinom(n = n_sims, size = `V*`,     p = `p(E|V)`),
     `V*E*`  = rbinom(n = n_sims, size = `V*E`,    p = `p(E*|E,V)`),
-    `L`     = rbinom(n = n_sims, size = `V*E*`,   p = `p(L|V*E*)`),
+    `L`     = rbinom(n = n_sims, size = `V*E*`,   p = `p(L|V*,E*)`),
 
     `!V*E`  = rbinom(n = n_sims, size = V - `V*`, p = `p(E|V)`),
     `!V*E*` = rbinom(n = n_sims, size = `!V*E`,   p = `p(E*|E,V)`),
