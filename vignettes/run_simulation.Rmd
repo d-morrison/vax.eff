@@ -182,3 +182,35 @@ Simulation results for varying $N^*$ (with $P(V) = `r pV`$, $r_D = `r rD`$, $r_V
 ```{r, results = 'asis'}
 pander(all_results)
 ```
+
+
+
+## Table 5
+
+```{r, include = FALSE}
+
+pV = .75
+rD1 = c(.5, .75, .85, 1)
+rD0 = c(.75)
+rV = 1
+R = .2
+pL = 1
+N = 11 * 10^6
+multiplier = 1
+`N*` = N * multiplier
+
+all_results = gen_tab1(`p(V)` = pV, 
+                       `p(E*|E,V)` = rD1, 
+                        `p(E*|E,!V)` = rD0, 
+                       `p(V*|V)` = rV, 
+                       `N*` = `N*`,
+                       `R` = R,
+                       `p(L|V*,E*)` = pL)
+
+```
+
+Simulation results for varying $r_{C1}$ (with $r_{C0} = `r rD0`$, $P(V) = `r pV`$, $r_D = `r rD`$, $r_V = `r rV`$, $p_L = `r pL`$, and $R = `r R`$):
+
+```{r, results = 'asis'}
+pander(all_results)
+```
