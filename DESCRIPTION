@@ -2,7 +2,15 @@ Package: vax.eff
 Type: Package
 Title: Vaccine effectiveness estimates from linked registry data
 Version: 0.1.0
-Author: Who wrote it
+Authors@R: c(
+    person(given = "Douglas",
+           family = "Morrison",
+           role = c("aut", "cre","cph"),
+           email = "demorrison@ucdavis.edu",
+           comment = c(ORCID = "0000-0002-7195-830X")),
+    person(given = "Ron",
+           family = "Brookmeyer",
+           role = c("aut")))
 Maintainer: The package maintainer <yourself@somewhere.net>
 Description: Code to implement the analyses from "Estimating Vaccine Effectiveness from Linking Population-Based Health Registries: 
     Some Sources of Bias", by Ron Brookmeyer and Doug Morrison (AJE 2022)
