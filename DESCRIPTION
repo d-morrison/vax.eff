@@ -3,7 +3,7 @@ Type: Package
 Title: Vaccine effectiveness estimates from linked registry data
 Version: 0.1.0
 Authors@R: c(
-    person(given = "Douglas",
+    person(given = "Douglas Ezra",
            family = "Morrison",
            role = c("aut", "cre","cph"),
            email = "demorrison@ucdavis.edu",
