@@ -48,23 +48,27 @@ given $P(V) = `r pV`$, $R = `r R`$, and $N^* = N$.
 fig_1 = fig1(
   pV = pV,
   R = R,
+  y_limits = c(0, 0.4),
   f = 0,
   lwd = .5,
   n_points = 251,
   label_x = 1.065,
   margin_offset = .05,
-  add_title = FALSE)
+  axis_title_size = 20,
+  axis_tick_text_size = 20,
+  rv_size = 20/.pt,
+  add_title = FALSE,
+  top_border = FALSE)
 
 if(FALSE)
 {
   ggplot2::ggsave(filename = "figs/fig1.pdf", 
-    plot = fig_1, 
-    device = "pdf", 
-    dpi = 1200, 
-    width = 7, 
-    height = 6,
-    
-    units = "in")
+                  plot = fig_1, 
+                  device = "pdf", 
+                  dpi = 1200, 
+                  width = 7, 
+                  height = 6,
+                  units = "in")
   
   
   extrafont::loadfonts()  
@@ -93,9 +97,9 @@ N = 11 * 10^6
 `N*` = N
 
 all_results = gen_tab1(`p(V)` = pV, `p(E*|E)` = rD, `p(V*|V)` = rV, 
-  `N*` = `N*`,
-  `R` = c(1, .2),
-  `p(L|V*,E*)` = c(.95, .9, .7))
+                       `N*` = `N*`,
+                       `R` = c(1, .2),
+                       `p(L|V*,E*)` = c(.95, .9, .7))
 
 ```
 
@@ -119,9 +123,9 @@ N = 11 * 10^6
 `N*` = N
 
 all_results = gen_tab1(`p(V)` = pV, `p(E*|E)` = rD, `p(V*|V)` = rV, 
-  `N*` = `N*`,
-  `R` = c(1, .2),
-  `p(L|V*,E*)` = c(.95, .9, .7))
+                       `N*` = `N*`,
+                       `R` = c(1, .2),
+                       `p(L|V*,E*)` = c(.95, .9, .7))
 ```
 
 Simulation results with $P(V) = `r pV`$, $r_D = `r rD`$, $r_V = `r rV`$, and $N^* = N = 11 * 10^6$:
@@ -145,11 +149,11 @@ multiplier = c(1.2, 1.1, 1.05, 1, .95, .9, .8)
 `N*` = N * multiplier
 
 all_results = gen_tab1(`p(V)` = pV, 
-  `p(E*|E)` = rD, 
-  `p(V*|V)` = rV, 
-  `N*` = `N*`,
-  `R` = R,
-  `p(L|V*,E*)` = pL) %>%
+                       `p(E*|E)` = rD, 
+                       `p(V*|V)` = rV, 
+                       `N*` = `N*`,
+                       `R` = R,
+                       `p(L|V*,E*)` = pL) %>%
   rename(`$N^*$` = `$N*$`) %>%
   mutate(`$N^*$` = scales::number(`$N^*$`, big.mark = ","))
 
@@ -180,11 +184,11 @@ multiplier = c(1.2, 1.1, 1.05, 1, .95, .9, .8)
 `N*` = N * multiplier
 
 all_results = gen_tab1(`p(V)` = pV, 
-  `p(E*|E)` = rD, 
-  `p(V*|V)` = rV, 
-  `N*` = `N*`,
-  `R` = R,
-  `p(L|V*,E*)` = pL) %>%
+                       `p(E*|E)` = rD, 
+                       `p(V*|V)` = rV, 
+                       `N*` = `N*`,
+                       `R` = R,
+                       `p(L|V*,E*)` = pL) %>%
   rename(`$N^*$` = `$N*$`) %>%
   mutate(`$N^*$` = scales::number(`$N^*$`, big.mark = ","))
 
@@ -218,12 +222,12 @@ multiplier = 1
 `N*` = N * multiplier
 
 all_results = gen_tab1(`p(V)` = pV, 
-  `p(E*|E,V)` = rD1, 
-  `p(E*|E,!V)` = rD0, 
-  `p(V*|V)` = rV, 
-  `N*` = `N*`,
-  `R` = R,
-  `p(L|V*,E*)` = pL)
+                       `p(E*|E,V)` = rD1, 
+                       `p(E*|E,!V)` = rD0, 
+                       `p(V*|V)` = rV, 
+                       `N*` = `N*`,
+                       `R` = R,
+                       `p(L|V*,E*)` = pL)
 
 ```
 
